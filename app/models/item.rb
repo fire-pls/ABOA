@@ -7,7 +7,7 @@ class Item < ApplicationRecord
     "XL",
     "Fits all"
   ]
-  belongs_to :order
+  belongs_to :stock
 
   validates :size, inclusion: { in: SIZES }
 end

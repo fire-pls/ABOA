@@ -17,5 +17,5 @@ class Order < ApplicationRecord
 
   def full_address_changed?
     address_changed? || zip_code_changed? || city_changed? || country_changed?
-end
+  end
 end

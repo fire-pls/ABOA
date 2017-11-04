@@ -29,11 +29,11 @@ ActiveRecord::Schema.define(version: 20171104132804) do
   end
 
   create_table "items", force: :cascade do |t|
-    t.bigint "order_id"
+    t.bigint "stock_id"
     t.string "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_items_on_order_id"
+    t.index ["stock_id"], name: "index_items_on_stock_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 20171104132804) do
   end
 
   add_foreign_key "carts", "users"
-  add_foreign_key "items", "orders"
+  add_foreign_key "items", "stocks"
   add_foreign_key "orders", "users"
   add_foreign_key "reservations", "carts"
   add_foreign_key "reservations", "items"

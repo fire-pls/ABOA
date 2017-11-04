@@ -12,5 +12,12 @@ class Item < ApplicationRecord
   has_one :category, through: :stock
 
   validates :size, inclusion: { in: SIZES }
-  validates :order, presence: true, uniqueness: { scope: :order_id }
+  validate :order_is_unique, on: :update
+
+  private
+
+  def order_is_unique
+    errors.add(:order_id, "item has already been ordered") if self.order_id_changed?
+    binding.pry
+  end
 end

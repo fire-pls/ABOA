@@ -7,4 +7,6 @@ class User < ApplicationRecord
   has_many :orders, dependent: :destroy
   has_many :reservations, through: :cart
   has_many :items, through: :orders
+
+  #before_save :geocode
 end

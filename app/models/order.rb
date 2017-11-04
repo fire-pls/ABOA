@@ -2,7 +2,6 @@ class Order < ApplicationRecord
   belongs_to :user
   has_many :items
 
-  validates_uniqueness_of :items
   validates :address, presence: true
   validates :zip_code, presence: true
   validates :city, presence: true
@@ -12,7 +11,7 @@ class Order < ApplicationRecord
   after_validation :geocode, if: :full_address_changed?
 
   def full_address
-    "#{address}, #{zip_code} #{city} #{ISO3166::Country[country].name}"
+    "#{address}, #{city} #{ISO3166::Country[country].name}, #{zip_code}"
   end
 
   def full_address_changed?

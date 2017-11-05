@@ -31,6 +31,11 @@ class Cart < ApplicationRecord
     self.reservations.destroy_all
   end
 
+  def force_checkout!
+    size_still_in_stock {"force"}
+    self.reload.checkout
+  end
+
   private
   def size_still_in_stock
     stocks = {}
@@ -52,12 +57,21 @@ class Cart < ApplicationRecord
         qty_left = available.count
         binding.pry
         if qty_left == 0
-          errors.add(:base, "There are no #{size} #{stock.name}s left.")
+          if block_given?
+            self.items.where(stock:stock, size:size).each { |itm| Reservation.find_by(item_id: itm.id).destroy }
+          else
+            errors.add(:base, "There are no #{size} #{stock.name}s left.")
+          end
         elsif qty_left < desired
-          errors.add(:base, "There are only #{qty_left} #{size} #{stock.name}s left. You tried to purchase #{desired}.")
+          if block_given?
+            self.items.where(stock:stock, size:size).each { |itm| Reservation.find_by(item_id: itm.id).destroy }
+            qty_left.times { |i| Reservation.create(item:available[i], cart:self)}
+          else
+            errors.add(:base, "There are only #{qty_left} #{size} #{stock.name}s left. You tried to purchase #{desired}.")
+          end
         else
-          self.reservations.where(stock:stock, size:size).each do |res|
-            res.update(item:available[i])
+          self.items.where(stock:stock, size:size).each_with_index do |itm,i|
+            Reservation.find_by(item_id: itm.id).update(item:available[i])
           end
         end
       end

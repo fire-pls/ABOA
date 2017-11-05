@@ -14,9 +14,21 @@ class Item < ApplicationRecord
   validates :size, inclusion: { in: SIZES }
   validate :order_is_unique, on: :update
 
+
+  def quantity_left
+    return list_of_available.count
+  end
+
+  def first_available
+    list_of_available.first
+  end
+
   private
+  def list_of_available
+    return Item.where(stock:self.stock,size:self.size,order_id:nil)
+  end
 
   def order_is_unique
-    errors.add(:order_id, "item has already been ordered") unless self.order_id_was == nil
+    errors.add(:order_id, "Item has already been ordered.") unless self.order_id_was == nil
   end
 end

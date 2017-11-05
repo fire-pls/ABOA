@@ -17,9 +17,9 @@ class Cart < ApplicationRecord
     end
   end
 
-  def checkout
+  def checkout(order)
     usr = self.user
-    ord = Order.new(user: usr, address: '1016 E San Antonio Drive', zip_code: '90807', country:'US', city:'Long Beach')
+    ord = order
     self.items.each { |item| ord.items << item }
     if ord.save
       self.empty!

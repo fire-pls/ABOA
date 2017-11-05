@@ -17,7 +17,6 @@ class Item < ApplicationRecord
   private
 
   def order_is_unique
-    errors.add(:order_id, "item has already been ordered") if self.order_id_changed?
-    binding.pry
+    errors.add(:order_id, "item has already been ordered") unless self.order_id_was == nil
   end
 end

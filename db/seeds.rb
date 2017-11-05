@@ -6,18 +6,15 @@ end
 
 unless Stock.any?
   Stock.create(name:'Black Tshirt',description:'Fitted crew neck. 100% cotton',category:Category.create(name:"MENS"))
-  Item.create(stock:Stock.first,size:'S')
-  Item.create(stock:Stock.first,size:'S')
-  Item.create(stock:Stock.first,size:'S')
-  Item.create(stock:Stock.first,size:'S')
-  Item.create(stock:Stock.first,size:'M')
-  Item.create(stock:Stock.first,size:'M')
-  Item.create(stock:Stock.first,size:'M')
-  Item.create(stock:Stock.first,size:'L')
-  Item.create(stock:Stock.first,size:'L')
-  Item.create(stock:Stock.first,size:'L')
-  Item.create(stock:Stock.first,size:'L')
-  Item.create(stock:Stock.first,size:'L')
-  Item.create(stock:Stock.first,size:'L')
+  {
+    "S" => 5,
+    "M" => 3,
+    "L" => 5,
+    "XL" => 1
+  }.each do |k,v|
+    v.times { |_| Item.create(size:k) }
+  end
 end
 
+Cart.first.add_quantity_and_size(2, "M", Stock.first)
+Cart.last.add_quantity_and_size(2, "M", Stock.first)

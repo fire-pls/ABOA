@@ -18,9 +18,17 @@ class Cart < ApplicationRecord
   end
 
   def checkout
-    ord = Order.new(user: self.user, address: '1016 E San Antonio Drive', zip_code: '90807', country:'US', city:'Long Beach')
+    usr = self.user
+    ord = Order.new(user: usr, address: '1016 E San Antonio Drive', zip_code: '90807', country:'US', city:'Long Beach')
     self.items.each { |item| ord.items << item }
-    ord.save
+    if ord.save
+      self.empty!
+      return true
+    end
+  end
+
+  def empty!
+    self.reservations.destroy_all
   end
 
   private

@@ -1,10 +1,20 @@
 class Cart < ApplicationRecord
   belongs_to :user
   has_many :reservations, dependent: :destroy
-  validate :stock_left, on: :update
+  has_many :items, through: :reservations
+  validates_associated :reservations
+  validate :size_still_in_stock, on: :checkout
 
-  def reserve_item(stock, size)
-    Reservation.create(cart:self,item:stock.first_available_item(size))
+  def add_quantity_and_size(qty, size, stock)
+    stock_left = stock.available_items(size)
+    size_count = stock_left.count
+    if size_count == 0
+      errors.add(:base, "There are no articles left of this size.")
+    elsif size_count < qty
+      errors.add(:base, "There are only #{size_count} articles left of this size.")
+    else
+      qty.times { |i| Reservation.create(cart:self,item:stock_left[i]) }
+    end
   end
 
   def checkout
@@ -12,18 +22,45 @@ class Cart < ApplicationRecord
   end
 
   private
-  def stock_left
-    self.reservations.each do |res|
-      orig_itm = res.item
-      if orig_itm.order_id != nil
-        stock = orig_itm.stock
-        new_item = stock.first_available_item(orig_itm.size)
-        new_item == nil ? res.destroy : res.update(item:new_item)
+  def size_still_in_stock
+    stocks = {}
+    self.items.pluck(:stock_id, :size).each do |arr_item|
+      key = arr_item[0]
+      if stocks.has_key?(key)
+        stocks[key] << arr_item[1]
+      else
+        stocks[key] = [arr_item[1]]
+      end
+    end
+    stocks.each do |k,v|
+      #k is stock id
+      stock = Stock.find(k)
+      duplicates = v.group_by{|size| size}
+      duplicates.each do |size,arr|
+        desired = arr.count
+        available = stock.items.where(order_id:nil,size:size)
+        qty_left = available.count
+        if qty_left == 0
+          errors.add(:base, "There are no #{size} #{stock.name}s left.")
+        elsif qty_left < desired
+          errors.add(:base, "There are only #{qty_left} #{size} #{stock.name}s left. You tried to purchase #{desired}.")
+        else
+          self.reservations.where(stock:stock, size:size).destroy_all
+          desired.times.do |i|
+            Reservation.create(item:available[i],cart:self)
+          end
+        end
       end
     end
   end
-
-  def check_reservations
-
-  end
 end
+      # item = res.item
+      # stock = item.stock
+      # if item.order_id != nil
+      #   stock_left = item.stock.available_items(item.size)
+      #   if stock_left == 0
+      #     errors.add(:base, "There are no more #{item.size} #{stock.name}s left.")
+      #   else
+      #     get_next_available(item)
+      #   end
+      # end

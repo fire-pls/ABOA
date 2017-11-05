@@ -11,7 +11,7 @@ class Order < ApplicationRecord
   after_validation :geocode, if: :full_address_changed?
 
   def full_address
-    "#{address}, #{city} #{ISO3166::Country[country].name}, #{zip_code}"
+    "#{address}, #{city}, #{zip_code} #{ISO3166::Country[country].name}"
   end
 
   def full_address_changed?

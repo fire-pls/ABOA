@@ -18,7 +18,9 @@ class Cart < ApplicationRecord
   end
 
   def checkout
-
+    ord = Order.new(user: self.user, address: '1016 E San Antonio Drive', zip_code: '90807', country:'US', city:'Long Beach')
+    self.items.each { |item| ord.items << item }
+    ord.save
   end
 
   private
@@ -45,9 +47,8 @@ class Cart < ApplicationRecord
         elsif qty_left < desired
           errors.add(:base, "There are only #{qty_left} #{size} #{stock.name}s left. You tried to purchase #{desired}.")
         else
-          self.reservations.where(stock:stock, size:size).destroy_all
-          desired.times.do |i|
-            Reservation.create(item:available[i],cart:self)
+          self.reservations.where(stock:stock, size:size).each do |res|
+            res.update(item:available[i])
           end
         end
       end

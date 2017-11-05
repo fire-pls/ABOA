@@ -10,6 +10,8 @@ class Order < ApplicationRecord
   geocoded_by :full_address
   after_validation :geocode, if: :full_address_changed?
   validates :items, presence: true
+  validates_associated :items
+  validate :has_no_order_id, on: :create
 
   def full_address
     "#{address}, #{city}, #{zip_code} #{ISO3166::Country[country].name}"
@@ -20,7 +22,7 @@ class Order < ApplicationRecord
   end
 
   private
-  def has_items
-    errors.add(:base, 'Needs items') unless self.items.any?
+  def has_no_order_id
+    errors.add(:base, 'Cart includes items which may be out of stock. Please reload page.') if self.items.where(:order_id => !nil).any?
   end
 end

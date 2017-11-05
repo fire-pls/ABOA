@@ -17,7 +17,7 @@ class Reservation < ApplicationRecord
     item = self.item
     if item.order_id != nil
       save = get_next_available
-      save == nil ? errors.add(:item_id, 'Size #{item.size} has run out of stock.') : self.update(item:save)
+      save == nil ? errors.add(:item_id, "Size #{item.size} has run out of stock.") : self.update(item:save)
     end
   end
 end

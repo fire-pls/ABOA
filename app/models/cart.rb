@@ -3,7 +3,7 @@ class Cart < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :items, through: :reservations
   validates_associated :reservations
-  validate :size_still_in_stock, on: :checkout
+  validate :size_still_in_stock
 
   def add_quantity_and_size(qty, size, stock)
     stock_left = stock.available_items(size)
@@ -42,6 +42,7 @@ class Cart < ApplicationRecord
         desired = arr.count
         available = stock.items.where(order_id:nil,size:size)
         qty_left = available.count
+        binding.pry
         if qty_left == 0
           errors.add(:base, "There are no #{size} #{stock.name}s left.")
         elsif qty_left < desired

@@ -12,7 +12,7 @@ unless Stock.any?
     "L" => 5,
     "XL" => 1
   }.each do |k,v|
-    v.times { |_| Item.create(size:k) }
+    v.times { |_| Item.create(size:k, stock:Stock.last) }
   end
 end
 

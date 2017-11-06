@@ -19,6 +19,7 @@ gem 'uglifier'
 
 gem "geocoder"
 gem "country_select"
+gem "pundit"
 
 group :development, :test do
   gem 'pry-byebug'

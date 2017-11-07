@@ -5,7 +5,14 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :orders, only: [ :index, :show, :update, :create, :destroy ]
-      resources :stocks, only: [ :index ]
+      get '/cart/', to: 'carts#show', as: 'cart'
+      patch '/cart/', to: 'carts#update', as: 'update_cart'
+      get '/cart/checkout/', to: 'carts#checkout', as: 'checkout'
+      #route all items inside category
+      resources :categories, only: [ :index, :new, :create ]
+      resources :categories, path: '', param: :name, except: [ :index, :new, :create ] do
+        get '/:id', to: 'stocks#show'
+      end
     end
   end
 end

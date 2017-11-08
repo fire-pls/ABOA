@@ -26,7 +26,8 @@ class Api::V1::CartsController < Api::V1::BaseController
 
   def checkout
     order = Order.new(order_params)
-    ord = @cart.checkout(order.user = @cart.user)
+    order.user = current_user
+    ord = @cart.checkout(order)
     if ord == false
       render_error
     else

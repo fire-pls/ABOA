@@ -3,7 +3,7 @@ unless User.any?
     User.create(email:"#{name}@mail.com",password:'123123')
   end
 end
-User.first.admin = true
+User.first.update(admin:true)
 
 unless Stock.any?
   Stock.create(name:'Black T-shirt',description:'Fitted crew neck. Plain black, 100% cotton',category:Category.create(name:"men"))

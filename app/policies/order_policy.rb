@@ -1,12 +1,16 @@
 class OrderPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(delivered:false)
+      if user.admin
+        scope.all
+      else
+        scope.where(user:user)
+      end
     end
   end
 
   def index?
-    user.admin
+    user.signed_in?
   end
 
   def show?

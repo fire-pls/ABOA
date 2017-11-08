@@ -11,9 +11,9 @@ Rails.application.routes.draw do
       patch '/cart/', to: 'carts#update', as: 'update_cart'
       post '/cart/checkout/', to: 'carts#checkout', as: 'checkout'
       #route all items inside category
-      resources :categories, only: [ :index, :new, :create ]
-      resources :categories, path: '', param: :name, except: [ :index, :new, :create ] do
-        get '/:id', to: 'stocks#show'
+      resources :categories, except: [ :show ]
+      resources :categories, path: '', param: :name, only: [ :show ] do
+        resources :stocks, path: ''
       end
     end
   end

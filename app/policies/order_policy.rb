@@ -1,15 +1,23 @@
 class OrderPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all
+      scope.where(delivered:false)
     end
   end
 
   def index?
-    return true
+    user.admin
   end
 
   def show?
-    return true
+    record.user == user || user.admin
+  end
+
+  def update?
+    record.user == user || user.admin
+  end
+
+  def destroy?
+    user.admin
   end
 end

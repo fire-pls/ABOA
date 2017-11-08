@@ -20,6 +20,7 @@ gem 'uglifier'
 gem "geocoder"
 gem "country_select"
 gem "pundit"
+gem "simple_token_authentication"
 
 group :development, :test do
   gem 'pry-byebug'

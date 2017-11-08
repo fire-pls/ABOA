@@ -55,7 +55,6 @@ class Cart < ApplicationRecord
         desired = arr.count
         available = stock.items.where(order_id:nil,size:size)
         qty_left = available.count
-        binding.pry
         if qty_left == 0
           if block_given?
             self.items.where(stock:stock, size:size).each { |itm| Reservation.find_by(item_id: itm.id).destroy }

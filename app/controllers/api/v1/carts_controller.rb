@@ -17,6 +17,11 @@ class Api::V1::CartsController < Api::V1::BaseController
 
   def set_cart
     @cart = current_user.cart
+    if @cart.items.where.not(order_id:nil).any?
+      taken_items = @cart.items.where.not(order_id:nil)
+      items = Item.return_available_items(taken_items)
+      @cart.
+    end
     authorize @cart  # For Pundit
   end
 

@@ -10,18 +10,14 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def show?
-    return true
-  end
-
-  def create?
-    return true
+    record.user == user || user.admin
   end
 
   def update?
-    return true
+    record.user == user || user.admin
   end
 
   def destroy?
-    return true
+    user.admin
   end
 end

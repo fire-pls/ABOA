@@ -6,18 +6,6 @@ class Api::V1::OrdersController < Api::V1::BaseController
     @orders = policy_scope(Order)
   end
 
-  def create
-    @order = Order.new(order_params)
-    @order.user = current_user
-    current_user.cart.checkout(@order)
-    authorize @order
-    if @order.save
-      render :show, status: :created
-    else
-      render_error
-    end
-  end
-
   def show
   end
 

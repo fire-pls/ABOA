@@ -24,27 +24,27 @@ class Item < ApplicationRecord
   end
 
   def self.return_available_items(array_of_old)
-    final = {none:[], available:{less:{},more:{}}}
+    final = {none:[], available:{}}
     stocks = {}
-    array_of_old.pluck(:stock_id, :size).each do |arr|
+    array_of_old.pluck(:stock_id, :size, :id).each do |arr|
       key = arr[0]
-      stocks.has_key?(key) ? stocks[key] << arr[1] : stocks[key] = [arr[1]]
+      stocks.has_key?(key) ? stocks[key] << [arr[1],arr[2]] : stocks[key] = [[arr[1],arr[2]]]
     end
     stocks.each do |k,v|
       stock = Stock.find(k)
-      duplicates = v.group_by{|size| size}
-      duplicates.each do |size, arr|
-        desired = arr.count
-        available = stock.items.where(order_id:nil,size:size)
+      duplicates = v.group_by{|x,y| x}
+      #hash of "size"=>[["size", id],["size", id]]
+      duplicates.each do |size, arr_arr|
+        desired = arr_arr.count
+        available = stock.items.where(order_id:nil,size:size).pluck(:id)
         qty_left = available.count
         if qty_left == 0
-          final[:none] << [stock.id,size]
-        elsif qty_left < desired
-          final[:available][:less][stock.id] = []
-          qty_left.times { |i| final[:available][:less][stock.id] << available[i] }
-        else
-          final[:available][:more][stock.id] = []
-          desired.times { |i| final[:available][:more][stock.id] << available[i] }
+          #group == ['size',id]
+          arr_arr.each { |group| final[:none] << group.last }
+        else qty_left < desired
+          final[:available][stock.id] = {}
+          #make hash of stock_id=>{orig_item_id: avail_item_id}
+          arr_arr.each_with_index { |arr, i| final[:available][stock.id][arr.last] = available[i] }
         end
       end
     end

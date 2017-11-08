@@ -9,6 +9,10 @@ class CartPolicy < ApplicationPolicy
     record.user == user
   end
 
+  def checkout?
+    record.user == user
+  end
+
   def update?
     record.user == user
   end

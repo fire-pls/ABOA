@@ -46,45 +46,45 @@ class Cart < ApplicationRecord
 
   private
 
-  # def size_still_in_stock
-  #   stocks = {}
-  #   self.items.pluck(:stock_id, :size).each do |arr_item|
-  #     key = arr_item[0]
-  #     if stocks.has_key?(key)
-  #       stocks[key] << arr_item[1]
-  #     else
-  #       stocks[key] = [arr_item[1]]
-  #     end
-  #   end
-  #   stocks.each do |k,v|
-  #     #k is stock id
-  #     stock = Stock.find(k)
-  #     duplicates = v.group_by{|size| size}
-  #     duplicates.each do |size,arr|
-  #       desired = arr.count
-  #       available = stock.items.where(order_id:nil,size:size)
-  #       qty_left = available.count
-  #       if qty_left == 0
-  #         if block_given?
-  #           self.items.where(stock:stock, size:size).each { |itm| Reservation.find_by(item_id: itm.id).destroy }
-  #         else
-  #           errors.add(:base, "There are no #{size} #{stock.name}s left.")
-  #         end
-  #       elsif qty_left < desired
-  #         if block_given?
-  #           self.items.where(stock:stock, size:size).each { |itm| Reservation.find_by(item_id: itm.id).destroy }
-  #           qty_left.times { |i| Reservation.create(item:available[i], cart:self)}
-  #         else
-  #           errors.add(:base, "There are only #{qty_left} #{size} #{stock.name}s left. You tried to purchase #{desired}.")
-  #         end
-  #       else
-  #         self.items.where(stock:stock, size:size).each_with_index do |itm,i|
-  #           Reservation.find_by(item_id: itm.id).update(item:available[i])
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
+  def size_still_in_stock
+    stocks = {}
+    self.items.pluck(:stock_id, :size).each do |arr_item|
+      key = arr_item[0]
+      if stocks.has_key?(key)
+        stocks[key] << arr_item[1]
+      else
+        stocks[key] = [arr_item[1]]
+      end
+    end
+    stocks.each do |k,v|
+      #k is stock id
+      stock = Stock.find(k)
+      duplicates = v.group_by{|size| size}
+      duplicates.each do |size,arr|
+        desired = arr.count
+        available = stock.items.where(order_id:nil,size:size)
+        qty_left = available.count
+        if qty_left == 0
+          if block_given?
+            self.items.where(stock:stock, size:size).each { |itm| Reservation.find_by(item_id: itm.id).destroy }
+          else
+            errors.add(:base, "There are no #{size} #{stock.name}s left.")
+          end
+        elsif qty_left < desired
+          if block_given?
+            self.items.where(stock:stock, size:size).each { |itm| Reservation.find_by(item_id: itm.id).destroy }
+            qty_left.times { |i| Reservation.create(item:available[i], cart:self)}
+          else
+            errors.add(:base, "There are only #{qty_left} #{size} #{stock.name}s left. You tried to purchase #{desired}.")
+          end
+        else
+          self.items.where(stock:stock, size:size).each_with_index do |itm,i|
+            Reservation.find_by(item_id: itm.id).update(item:available[i])
+          end
+        end
+      end
+    end
+  end
 end
       # item = res.item
       # stock = item.stock

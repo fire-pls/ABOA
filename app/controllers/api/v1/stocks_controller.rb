@@ -62,7 +62,7 @@ class Api::V1::StocksController < Api::V1::BaseController
   end
 
   def stock_params
-    params.require(:stock).permit(:name, :description, :category_id, :sizes => {})
+    params.require(:stock).permit(:name, :description, :category_id, :sizes => {}, photos: [])
   end
 
   def add_items_if_needed

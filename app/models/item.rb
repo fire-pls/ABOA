@@ -42,8 +42,8 @@ class Item < ApplicationRecord
           #group == ['size',id]
           arr_arr.each { |group| final[:none] << group.last }
         else qty_left < desired
-          final[:available][stock.id] = {}
           #make hash of stock_id=>{orig_item_id: avail_item_id}
+          final[:available][stock.id] = {} unless final[:available].has_key?(stock.id)
           arr_arr.each_with_index { |arr, i| final[:available][stock.id][arr.last] = available[i] }
         end
       end

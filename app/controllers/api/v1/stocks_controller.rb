@@ -6,7 +6,7 @@ class Api::V1::StocksController < Api::V1::BaseController
     @stocks = policy_scope(Stock).where(category:Category.find_by(name:params[:category_name]))
     if @stocks == []
       render json:
-        { errors: "#{params[:category_name]} is not a proper category" },
+        { errors: "#{params[:category_name]} has no stock yet" },
         status: :unprocessable_entity
     end
   end

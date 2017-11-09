@@ -5,12 +5,13 @@ class Cart < ApplicationRecord
   validates_associated :reservations
   #validate :size_still_in_stock
 
-  def remove_quantity(qty, size, stock)
-    items = Item.where(size:size, stock_id:stock).pluck(:id)
+  def remove_quantity(qty, size, stock_id)
+    items = Item.where(size:size, stock_id:stock_id).pluck(:id)
     qty*(-1).times { |i| self.reservations.find_by(item_id:items[i]).destroy }
   end
 
-  def add_quantity_and_size(qty, size, stock)
+  def add_quantity_and_size(qty, size, stock_id)
+    stock = Stock.find(stock_id)
     stock_left = stock.available_items(size)
     size_count = stock_left.count
     if size_count == 0

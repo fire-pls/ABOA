@@ -17,7 +17,7 @@ class Api::V1::CartsController < Api::V1::BaseController
       @cart.remove_quantity(qty,size,stock_id)
       render :show
     elsif qty > 0
-      @cart.add_quantity_and_size(qty,size,Stock.find(stock_id))
+      @cart.add_quantity_and_size(qty,size,stock_id)
       render :show
     else
       render_error

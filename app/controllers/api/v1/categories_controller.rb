@@ -7,11 +7,17 @@ class Api::V1::CategoriesController < Api::V1::BaseController
   end
 
   def create
+    @category = Category.create(category_params)
+    authorize @category
+    redirect_to api_v1_categories_path
+    #redirect_to api_v1_categories_path
   end
 
   def update
-    if @category.update(category_params)
-      render :show
+    prev = @category.name
+    @category.update(category_params)
+    if @category.save
+      render json: { message: "The category #{prev} has been renamed from to #{@category.name}" }
     else
       render_error
     end
@@ -25,7 +31,7 @@ class Api::V1::CategoriesController < Api::V1::BaseController
   private
 
   def set_category
-    @category = category.find_by(params[:name])
+    @category = Category.find_by(name:params[:name])
     authorize @category  # For Pundit
   end
 

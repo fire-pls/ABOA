@@ -1,9 +1,9 @@
 class Api::V1::StocksController < Api::V1::BaseController
-  acts_as_token_authentication_handler_for User
+  acts_as_token_authentication_handler_for User, except: [ :index, :show ]
   before_action :set_stock, only: [ :show, :update, :destroy ]
 
   def index
-    @stocks = policy_scope(Stock)
+    @stocks = policy_scope(Stock).where(category:Category.find_by(name:params[:category_name]))
   end
 
   def show

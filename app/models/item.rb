@@ -13,6 +13,7 @@ class Item < ApplicationRecord
 
   validates :size, inclusion: { in: SIZES }
   validate :order_is_unique, on: :update
+  validate :has_title
 
 
   def quantity_left
@@ -54,5 +55,9 @@ class Item < ApplicationRecord
   private
   def order_is_unique
     errors.add(:order_id, "Item has already been ordered.") unless self.order_id_was == nil
+  end
+
+  def has_title
+    self.title = "#{self.stock.name}, size: #{self.size}" if self.title == nil
   end
 end

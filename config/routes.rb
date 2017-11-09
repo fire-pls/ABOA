@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       post '/cart/checkout/', to: 'carts#checkout', as: 'checkout'
       #route all items inside category
       resources :categories, only: [ :index, :create ]
-      resources :categories, path: '', param: :name, only: [ :show, :update, :destroy ] do
+      resources :categories, path: '/c/', param: :name, only: [ :show, :update, :destroy ] do
         resources :stocks, path: '', except: [ :new, :edit ]
       end
     end

@@ -7,6 +7,10 @@ class Api::V1::CategoriesController < Api::V1::BaseController
   end
 
   def create
+    @category = Category.create(category_params)
+    authorize @category
+    redirect_to api_v1_categories_path
+    #redirect_to api_v1_categories_path
   end
 
   def update
@@ -25,7 +29,7 @@ class Api::V1::CategoriesController < Api::V1::BaseController
   private
 
   def set_category
-    @category = category.find_by(params[:name])
+    @category = Category.find_by(name:params[:name])
     authorize @category  # For Pundit
   end
 

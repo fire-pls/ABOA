@@ -4,12 +4,18 @@ class Api::V1::StocksController < Api::V1::BaseController
 
   def index
     @stocks = policy_scope(Stock).where(category:Category.find_by(name:params[:category_name]))
+    if @stocks == []
+      render json:
+        { errors: "#{params[:category_name]} is not a proper category" },
+        status: :unprocessable_entity
+    end
   end
 
   def show
   end
 
   def create
+    @stock = Stock.new(stock_params)
   end
 
   def update
@@ -33,7 +39,7 @@ class Api::V1::StocksController < Api::V1::BaseController
   end
 
   def stock_params
-    params.require(:stock).permit(:name, :description)
+    params.require(:stock).permit(:name, :description, :category_id)
   end
 
   def render_error

@@ -21,6 +21,8 @@ gem "geocoder"
 gem "country_select"
 gem "pundit"
 gem "simple_token_authentication"
+gem 'cloudinary', '1.1.7'
+gem 'attachinary', github: 'assembler/attachinary'
 
 group :development, :test do
   gem 'pry-byebug'

@@ -1,6 +1,7 @@
 class Stock < ApplicationRecord
   belongs_to :category
   has_many :items
+  has_attachments :photos, maximum: 10
 
   validates_uniqueness_of :name, presence: true
   validates :description, presence: true

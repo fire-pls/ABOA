@@ -16,6 +16,11 @@ unless Stock.any?
   }.each do |k,v|
     v.times { |_| Item.create(size:k, stock:Stock.last) }
   end
+  urls = [
+    'https://fire-pls.github.io/profile/images/trainspotting.jpg',
+    'http://www.repiko.com/wp-content/uploads/2017/01/black-shirt.jpeg'
+  ]
+  Stock.last.photo_urls = urls
   Stock.create(name:'Red Blouse',description:'Cute casual blouse.',category:Category.create(name:"women"))
    {
     "XS" => 10,
@@ -29,9 +34,9 @@ unless Stock.any?
 end
 
 [2,3,4,5,6].each do |id|
-  Cart.find(id).add_quantity_and_size(2, "XS", Stock.first)
-  Cart.find(id).add_quantity_and_size(2, "S", Stock.first)
-  Cart.find(id).add_quantity_and_size(2, "M", Stock.first)
-  Cart.find(id).add_quantity_and_size(1, "L", Stock.first)
-  Cart.find(id).add_quantity_and_size(1, "XL", Stock.first)
+  Cart.find(id).add_quantity_and_size(2, "XS", 1)
+  Cart.find(id).add_quantity_and_size(2, "S", 1)
+  Cart.find(id).add_quantity_and_size(2, "M", 1)
+  Cart.find(id).add_quantity_and_size(1, "L", 1)
+  Cart.find(id).add_quantity_and_size(1, "XL", 1)
 end

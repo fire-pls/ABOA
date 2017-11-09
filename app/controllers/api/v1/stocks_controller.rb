@@ -3,11 +3,19 @@ class Api::V1::StocksController < Api::V1::BaseController
   before_action :set_stock, only: [ :show, :update, :destroy ]
 
   def index
-    @stocks = policy_scope(Stock).where(category:Category.find_by(name:params[:category_name]))
-    if @stocks == []
+    @category = Category.find_by(name:params[:category_name])
+    if @category == nil
+      @stocks = policy_scope(Stock)
       render json:
-        { errors: "#{params[:category_name]} has no stock yet" },
+        { errors: "The category #{params[:category_name]} does not exist." },
         status: :unprocessable_entity
+    else
+      @stocks = policy_scope(Stock).where(category:@category)
+      if @stocks == []
+        render json:
+          { errors: "#{params[:category_name]} has no stock yet" },
+          status: :unprocessable_entity
+      end
     end
   end
 
@@ -15,11 +23,21 @@ class Api::V1::StocksController < Api::V1::BaseController
   end
 
   def create
-    @stock = Stock.new(stock_params)
+    @category = Category.find_by(name:params[:category_name])
+    @stock = Stock.new(stock_params.except(:sizes))
+    @stock.category = @category
+    authorize @stock
+    if @stock.save
+      add_items_if_needed
+      render :show
+    else
+      render_error
+    end
   end
 
   def update
-    if @stock.update(stock_params)
+    if @stock.update(stock_params.except(:sizes))
+      add_items_if_needed
       render :show
     else
       render_error
@@ -34,12 +52,24 @@ class Api::V1::StocksController < Api::V1::BaseController
   private
 
   def set_stock
+    @category = Category.find_by(name:params[:category_name])
     @stock = Stock.find(params[:id])
-    authorize @stock  # For Pundit
+    if @stock.category == @category
+      authorize @stock # For Pundit
+    else
+      render json: { errors: "No stock with id #{@stock.id} found for category #{@category.name}" }
+    end
   end
 
   def stock_params
-    params.require(:stock).permit(:name, :description, :category_id)
+    params.require(:stock).permit(:name, :description, :category_id, :sizes => {})
+  end
+
+  def add_items_if_needed
+    @sizes = stock_params[:sizes]
+    unless @sizes.nil?
+      @sizes.each { |k,v| v.times { Item.create(stock:@stock, size:k) } } unless @sizes.empty?
+    end
   end
 
   def render_error

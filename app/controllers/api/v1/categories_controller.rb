@@ -14,9 +14,10 @@ class Api::V1::CategoriesController < Api::V1::BaseController
   end
 
   def update
+    prev = @category.name
     @category.update(category_params)
     if @category.save
-      render json: { message: "The category name has been updated to #{@category.name}" }
+      render json: { message: "The category #{prev} has been renamed from to #{@category.name}" }
     else
       render_error
     end

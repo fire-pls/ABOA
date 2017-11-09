@@ -1,7 +1,6 @@
-json.extract! @stock, :id, :name, :description
-json.sizes do
-  json.array! @stock.sizes
-end
-json.available_sizes do
-  json.array! @stock.available_sizes
+json.extract! @stock, :id, :name, :description, :quantity_left
+json.sizes @stock.sizes do |size|
+  json.size size
+  json.remaining @stock.quantity_left_of_size(size)
+  json.quantity @stock.quantity_of_size(size)
 end

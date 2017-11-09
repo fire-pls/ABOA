@@ -15,4 +15,8 @@ class Stock < ApplicationRecord
   def available_sizes
     self.items.where(order_id:nil).pluck(:size).uniq
   end
+
+  def quantity_left
+    self.items.where(order_id:nil).count
+  end
 end

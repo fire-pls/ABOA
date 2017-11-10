@@ -61,7 +61,6 @@ class Api::V1::CartsController < Api::V1::BaseController
   end
 
   def order_params
-    binding.pry
     params.require(:order).permit(:city, :address, :zip_code, :country)
   end
 

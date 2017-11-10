@@ -11,6 +11,14 @@ class Stock < ApplicationRecord
     self.items.where(size:size,order_id:nil)
   end
 
+  def price
+    Monetize.parse(self.base_price)
+  end
+
+  def price_formatted
+    Monetize.parse(self.base_price).format
+  end
+
   def sizes
     self.items.pluck(:size).uniq
   end

@@ -62,7 +62,7 @@ class Api::V1::StocksController < Api::V1::BaseController
   end
 
   def stock_params
-    params.require(:stock).permit(:name, :description, :category_id, :sizes => {}, photos: [])
+    permitted = params.require(:stock).permit(:name, :description, :category_id, :photos, :sizes => {})#, photos: photo_params)
   end
 
   def add_items_if_needed
@@ -70,6 +70,17 @@ class Api::V1::StocksController < Api::V1::BaseController
     unless @sizes.nil?
       @sizes.each { |k,v| v.times { Item.create(stock:@stock, size:k) } } unless @sizes.empty?
     end
+  end
+
+  def add_photos_if_needed
+    @photos = stock_params[:photos]
+    unless @photos.nil?
+      @photos.each { || } unless @photos.empty?
+    end
+  end
+
+  def photo_params
+    [:public_id, :version, :signature, :width, :height, :format, :resource_type, :created_at, :bytes, :type, :etag, :placeholder, :url, :secure_url, :original_filename]
   end
 
   def render_error

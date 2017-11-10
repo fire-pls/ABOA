@@ -18,7 +18,8 @@ unless Stock.any?
   end
   urls = [
     'https://fire-pls.github.io/profile/images/trainspotting.jpg',
-    'http://www.repiko.com/wp-content/uploads/2017/01/black-shirt.jpeg'
+    'http://www.repiko.com/wp-content/uploads/2017/01/black-shirt.jpeg',
+    '/home/trevor/Downloads/lmao.jpg'
   ]
   Stock.last.photo_urls = urls
   Stock.create(name:'Red Blouse',description:'Cute casual blouse.',category:Category.create(name:"women"))

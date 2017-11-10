@@ -23,6 +23,8 @@ gem "pundit"
 gem "simple_token_authentication"
 gem 'cloudinary', '1.1.7'
 gem 'attachinary', github: 'assembler/attachinary'
+gem 'money-rails'
+gem 'stripe'
 
 group :development, :test do
   gem 'pry-byebug'

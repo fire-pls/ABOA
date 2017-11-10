@@ -10,10 +10,12 @@ class Item < ApplicationRecord
   belongs_to :stock
   belongs_to :order, optional: true
   has_one :category, through: :stock
+  monetize :price_cents
 
   validates :size, inclusion: { in: SIZES }
   validate :order_is_unique, on: :update
   validate :has_title
+  validate :has_price
 
 
   def quantity_left
@@ -59,5 +61,9 @@ class Item < ApplicationRecord
 
   def has_title
     self.title = "#{self.stock.name}, size: #{self.size}" if self.title == nil
+  end
+
+  def has_price
+    self.price = self.stock.base_price if self.price_cents == 0
   end
 end

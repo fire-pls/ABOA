@@ -6,7 +6,7 @@ end
 User.first.update(admin:true)
 
 unless Stock.any?
-  Stock.create(name:'Black T-shirt',description:'Fitted crew neck. Plain black, 100% cotton',category:Category.create(name:"men"))
+  Stock.create(name:'Black T-shirt',description:'Fitted crew neck. Plain black, 100% cotton',category:Category.create(name:"men"),base_price:2000)
   {
     "XS" => 10,
     "S" => 10,
@@ -22,7 +22,7 @@ unless Stock.any?
     '/home/trevor/Downloads/lmao.jpg'
   ]
   Stock.last.photo_urls = urls
-  Stock.create(name:'Red Blouse',description:'Cute casual blouse.',category:Category.create(name:"women"))
+  Stock.create(name:'Red Blouse',description:'Cute casual blouse.',category:Category.create(name:"women"),base_price:2500)
    {
     "XS" => 10,
     "S" => 10,

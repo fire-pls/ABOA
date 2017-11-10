@@ -5,6 +5,7 @@ class Stock < ApplicationRecord
 
   validates_uniqueness_of :name, presence: true
   validates :description, presence: true
+  validates :base_price, presence: true
 
   def available_items(size)
     self.items.where(size:size,order_id:nil)

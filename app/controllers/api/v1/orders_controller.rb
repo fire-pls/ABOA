@@ -25,7 +25,7 @@ class Api::V1::OrdersController < Api::V1::BaseController
   private
 
   def set_order
-    @order = Order.find(params[:id])
+    @order = Order.where(paid:true).find(params[:id])
     authorize @order  # For Pundit
   end
 

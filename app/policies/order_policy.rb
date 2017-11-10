@@ -9,8 +9,16 @@ class OrderPolicy < ApplicationPolicy
     end
   end
 
+  def home?
+    true
+  end
+
+  def create?
+    record.user == user
+  end
+
   def index?
-    user.signed_in?
+    user.exists?
   end
 
   def show?

@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :orders, only: [ :index, :show, :update ]
+      resources :orders, only: [ :index, :show, :update ] do
+        resources :payments, only: [:new, :create]
+      end
       # get the order details on this page, post it to /cart/checkout
       #get '/orderdetails', to: 'orders#new'
       get '/cart/', to: 'carts#show', as: 'cart'

@@ -7,6 +7,8 @@ class Order < ApplicationRecord
   validates :city, presence: true
   validates :country, presence: true
 
+  monetize :amount_cents
+
   geocoded_by :full_address
   after_validation :geocode, if: :full_address_changed?
   #validates_associated :items

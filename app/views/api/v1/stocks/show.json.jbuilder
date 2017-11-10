@@ -1,4 +1,4 @@
-json.extract! @stock, :id, :name, :description, :quantity_left
+json.extract! @stock, :id, :name, :description, :quantity_left, :price_formatted, :price
 json.photos @stock.photos
 json.sizes @stock.sizes do |size|
   json.size size

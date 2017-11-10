@@ -20,7 +20,6 @@ class Api::V1::StocksController < Api::V1::BaseController
   end
 
   def show
-    binding.pry
   end
 
   def create
@@ -37,7 +36,6 @@ class Api::V1::StocksController < Api::V1::BaseController
   end
 
   def update
-    binding.pry
     if @stock.update(stock_params.except(:sizes))
       add_items_if_needed
       render :show

@@ -20,6 +20,7 @@ class Api::V1::StocksController < Api::V1::BaseController
   end
 
   def show
+    binding.pry
   end
 
   def create
@@ -36,6 +37,7 @@ class Api::V1::StocksController < Api::V1::BaseController
   end
 
   def update
+    binding.pry
     if @stock.update(stock_params.except(:sizes))
       add_items_if_needed
       render :show
@@ -62,13 +64,20 @@ class Api::V1::StocksController < Api::V1::BaseController
   end
 
   def stock_params
-    params.require(:stock).permit(:name, :description, :category_id, :sizes => {}, photos: [])
+    params.require(:stock).permit(:name, :description, :category_id, :photos, :sizes => {})
   end
 
   def add_items_if_needed
     @sizes = stock_params[:sizes]
     unless @sizes.nil?
       @sizes.each { |k,v| v.times { Item.create(stock:@stock, size:k) } } unless @sizes.empty?
+    end
+  end
+
+  def add_photos_if_needed
+    @photos = stock_params[:photos]
+    unless @photos.nil?
+      @photos.each { || } unless @photos.empty?
     end
   end
 

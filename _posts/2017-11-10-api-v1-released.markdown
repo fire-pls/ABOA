@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "API v1 Released!"
-date:   2017-11-10 19:21:18 -0800
+date:   2017-11-10 20:47:18 -0800
 categories: release
 ---
 

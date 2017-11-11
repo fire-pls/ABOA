@@ -1,7 +1,7 @@
-const baseUrl = "https://aboa-v1.herokuapp.com/api/v1/";
 let promo = 'general'; // change to your own promo id
+const baseUrl = "https://wagon-chat.herokuapp.com/";
 
-function showCart() {
+function showChatlog() {
   fetch(`${baseUrl}${promo}/messages`)
     .then(response => response.json())
     .then((data) => {
@@ -38,7 +38,7 @@ pressEnter.addEventListener('submit', (event) => {
     body: JSON.stringify(data)
   });
 });
-/*
+
 const clickSubmit = document.getElementById('submitbtn');
 clickSubmit.addEventListener('click', (event) => {
   event.preventDefault();
@@ -66,5 +66,3 @@ document.addEventListener("DOMContentLoaded", () => {
   showChatlog();
   setInterval(refresh, 60000);
 });
-
-*/

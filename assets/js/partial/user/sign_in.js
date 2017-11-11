@@ -10,8 +10,8 @@ console.log(cookie);
 
 //////////
 
-// const baseUrl = "https://aboa-v1.herokuapp.com/api/v1/"; production
-const baseUrl = "http://localhost:3000/api/v1/";
+const baseUrl = "https://aboa-v1.herokuapp.com/api/v1";// production
+//const baseUrl = "http://localhost:3000/api/v1";
 
 function showCart() {
   fetch(`${baseUrl}${promo}/messages`)
@@ -28,24 +28,18 @@ function showCart() {
       });
     });
 }
-const clickChannel = document.getElementById('changebtn');
-clickChannel.addEventListener('click', (event) => {
-  event.preventDefault();
-  const newchannel = document.getElementById('newchannel').value;
-  promo = newchannel;
-  console.log(`now in channel ${promo}`);
-  showChatlog();
-});
 
 const submitForm = document.getElementById('token');
 submitForm.addEventListener('submit', (event) => {
-  //event.preventDefault(); re-enable if cookie not saved.
+  event.preventDefault(); // re-enable if cookie not saved
   const email = document.getElementById('email').value;
   const token = document.getElementById('token').value;
-  const data = { user: { `${yourName}`, content: `${yourMessage}` } };
-  fetch(`${baseUrl}${promo}/messages`, {
-    method: 'POST',
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
+  //const data = { user: { `${yourName}`, content: `${yourMessage}` } };
+  fetch(`${baseUrl}/cart`, {
+    method: 'GET',
+    headers: { "X-User-Email": `${email}`, "X-User-Token": `${token}` }
+  }).then(response => response.json())
+    .then((data) => {
+      console.log(data);
+    });
 });

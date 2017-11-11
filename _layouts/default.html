@@ -15,6 +15,12 @@
 
     {% include footer.html %}
 
+
+    {%- capture possible_sheet -%}
+      {{- site.js_partial -}}{{- page.url | remove: ".html" -}}
+    {%- endcapture -%}
+    <p>{{- possible_sheet -}}</p>
+    <script src="{{- site.js_path -}}/application.js"></script>
   </body>
 
 </html>

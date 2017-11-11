@@ -1,5 +1,5 @@
 ---
 layout: default
-title: shop
+title: cart
 ---
-hey there
+cart

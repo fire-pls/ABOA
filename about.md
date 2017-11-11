@@ -1,7 +1,6 @@
 ---
 layout: default
 title: about
-permalink: /about
 ---
 
 This website is hosted using gh-pages, and the API itself is hosted on heroku.

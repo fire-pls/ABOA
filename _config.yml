@@ -19,7 +19,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   This is a static webpage that makes calls to my A_BOA api
   and dynamically updates with REAL information :) All information
   displayed is live, and only the admin can add content.
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "A_BOA" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: _rsdz
 github_username:  fire-pls

@@ -1,36 +1,27 @@
-source 'https://rubygems.org'
-ruby '2.3.5'
+source "https://rubygems.org"
 
-gem 'devise'
-gem 'figaro'
-gem 'jbuilder', '~> 2.0'
-gem 'pg'
-gem 'puma'
-gem 'rails', '5.1.4'
-gem 'redis'
+# Hello! This is where you manage which Jekyll version is used to run.
+# When you want to use a different version, change it below, save the
+# file and run `bundle install`. Run Jekyll with `bundle exec`, like so:
+#
+#     bundle exec jekyll serve
+#
+# This will help ensure the proper Jekyll version is running.
+# Happy Jekylling!
+#gem "jekyll", "~> 3.6.2"
 
-gem 'autoprefixer-rails'
-gem 'bootstrap-sass'
-gem 'font-awesome-sass'
-gem 'jquery-rails'
-gem 'sass-rails'
-gem 'simple_form'
-gem 'uglifier'
+# This is the default theme for new Jekyll sites. You may change this to anything you like.
+gem "minima", "~> 2.0"
 
-gem "geocoder"
-gem "country_select"
-gem "pundit"
-gem "simple_token_authentication"
-gem 'cloudinary', '1.1.7'
-gem 'attachinary', github: 'assembler/attachinary'
-gem 'money-rails'
-gem 'stripe'
+# If you want to use GitHub Pages, remove the "gem "jekyll"" above and
+# uncomment the line below. To upgrade, run `bundle update github-pages`.
+gem "github-pages", group: :jekyll_plugins
 
-group :development, :test do
-  gem 'pry-byebug'
-  gem 'pry-rails'
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.0.5'
-  gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+# If you have any plugins, put them here!
+group :jekyll_plugins do
+  gem "jekyll-feed", "~> 0.6"
 end
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+

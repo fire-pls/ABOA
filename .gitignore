@@ -1,10 +1,3 @@
-.bundle
-log/*.log
-tmp/**/*
-tmp/*
-*.swp
-.DS_Store
-public/assets
-
-# Ignore application configuration
-/config/application.yml
+_site
+.sass-cache
+.jekyll-metadata

@@ -2,7 +2,7 @@
 layout: post
 title:  "API v1 Released!"
 date:   2017-11-10 20:47:18 -0800
-categories: release
+category: releases
 ---
 
 Thanks for viewing my page. This github page will be dedicated to my A_BOA API,
@@ -20,4 +20,7 @@ it's a little messy ^__^;;
 ALSO, at the time of writing I don't have anything actually displayed ^__^;;
 I'll write another post as soon as the site is functioning proper.
 
-TODO: Need better README.md
+TODO:
+<ul>
+  <li>Need better README.md</li>
+</ul>

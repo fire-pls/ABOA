@@ -22,7 +22,8 @@ description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "/ABOA" # the subpath of your site, e.g. /blog
 url: "https://fire-pls.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 permalink: /:categories/:year/:month/:day/:title
-js_path: "/ABOA/assets/js"
+cookies: "/ABOA/assets/js/libraries/cookie.js"
+js_file: "/ABOA/assets/js/application.js"
 js_partial: "/ABOA/assets/js/partial"
 twitter_username: _rsdz
 github_username:  fire-pls

@@ -16,11 +16,11 @@
     {% include footer.html %}
 
 
-    {%- capture possible_sheet -%}
-      {{- site.js_partial -}}{{- page.url | remove: ".html" -}}
-    {%- endcapture -%}
-    <p>{{- possible_sheet -}}</p>
-    <script src="{{- site.js_path -}}/application.js"></script>
+    <script src="{{- site.cookies -}}"></script>
+    <!-- <script src="{{- site.js_file -}}"></script> -->
+    {%- if site.data.js.path contains page.url -%}
+      <script src="{{- site.js_partial -}}{{- page.url -}}.js"></script>
+    {%- endif -%}
   </body>
 
 </html>

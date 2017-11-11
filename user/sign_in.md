@@ -4,7 +4,7 @@ title: sign in
 ---
 
 <div>
-  <form action="/" id="signin">
+  <form action="#" id="signin">
 
     <div class="form-group">
       <label for="email">email</label>

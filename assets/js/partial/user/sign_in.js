@@ -10,7 +10,7 @@ console.log(cookie);
 
 //////////
 
-const baseUrl = "https://aboa-v1.herokuapp.com/api/v1";// production
+const baseUrl = "https://aboa-v1.herokuapp.com/api/v1/";// production
 //const baseUrl = "http://localhost:3000/api/v1";
 
 function showCart() {
@@ -35,6 +35,7 @@ submitForm.addEventListener('submit', (event) => {
   const email = document.getElementById('email').value;
   const token = document.getElementById('token').value;
   //const data = { user: { `${yourName}`, content: `${yourMessage}` } };
+  console.log(token)
   fetch(`${baseUrl}/cart`, {
     method: 'GET',
     headers: { "X-User-Email": `${email}`, "X-User-Token": `${token}` }

@@ -3,8 +3,9 @@ class Api::V1::BaseController < ActionController::Base
 
   after_action :verify_authorized, except: :index
   after_action :verify_policy_scoped, only: :index
+  after_action :allow_access
 
-  #rescue_from StandardError,                with: :internal_server_error
+  rescue_from StandardError,                with: :internal_server_error
   rescue_from Pundit::NotAuthorizedError,   with: :user_not_authorized
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
@@ -27,5 +28,9 @@ class Api::V1::BaseController < ActionController::Base
       response = { error: "Internal Server Error" }
     end
     render json: response, status: :internal_server_error
+  end
+
+  def allow_access
+    response.headers['Access-Control-Allow-Origin'] = '*'
   end
 end

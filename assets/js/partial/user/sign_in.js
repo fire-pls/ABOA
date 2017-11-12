@@ -44,3 +44,12 @@ submitForm.addEventListener('submit', (event) => {
       console.log(data);
     });
 });
+fetch('https://aboa-v1.herokuapp.com/api/v1/categories',
+  { headers:
+    { "Access-Control-Allow-Origin" : "*",
+    "Accept":'application/json'
+  }})
+.then(response => response.json())
+.then(data => {
+  (console.log(data));
+});

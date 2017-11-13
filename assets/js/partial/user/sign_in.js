@@ -1,13 +1,3 @@
-Cookies.set('test', "poopoo");
-console.log("now heres the cookies");
-cookie = Cookies.get();
-console.log(cookie);
-console.log("removing all cookies");
-Cookies.remove('test');
-console.log("now heres the cookies");
-cookie = Cookies.get();
-console.log(cookie);
-
 //////////
 
 const baseUrl = "https://aboa-v1.herokuapp.com/api/v1/";// production
@@ -29,27 +19,30 @@ function showCart() {
     });
 }
 
-const submitForm = document.getElementById('token');
-submitForm.addEventListener('submit', (event) => {
-  event.preventDefault(); // re-enable if cookie not saved
-  const email = document.getElementById('email').value;
-  const token = document.getElementById('token').value;
-  //const data = { user: { `${yourName}`, content: `${yourMessage}` } };
-  console.log(token)
-  fetch(`${baseUrl}/cart`, {
-    method: 'GET',
-    headers: { "X-User-Email": `${email}`, "X-User-Token": `${token}` }
-  }).then(response => response.json())
-    .then((data) => {
-      console.log(data);
+document.getElementById('signin').addEventListener('submit', function(event){
+  event.preventDefault();
+  let email = document.getElementById('email').value;
+  let token = document.getElementById('token').value;
+  let directory = document.getElementById('directory').value;
+  console.log(email);
+  console.log(token);
+  fetch(
+    `https://aboa-v1.herokuapp.com/api/v1/${directory}`/*,
+    {
+      method: 'GET',
+      headers:
+        {
+          'X-User-Email': `${email}`,
+          'X-User-Token': `${token}`
+        }
+    }*/
+  ).then(response => response.json()).then(data => {
+      (console.log(data));
     });
 });
-fetch('https://aboa-v1.herokuapp.com/api/v1/categories',
-  { headers:
-    { "Access-Control-Allow-Origin" : "*",
-    "Accept":'application/json'
-  }})
-.then(response => response.json())
-.then(data => {
-  (console.log(data));
+
+fetch('https://aboa-v1.herokuapp.com/api/v1/categories')
+  .then(response => response.json())
+  .then(data => {
+    (console.log(data));
 });

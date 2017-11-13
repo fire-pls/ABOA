@@ -29,6 +29,7 @@ document.getElementById('signin').addEventListener('submit', function(event){
   console.log(email);
   console.log(token);
   let heads = new Headers();
+  heasds.append('Content-Type', 'application/json')
   heads.append('X-User-Email', `${email}`);
   heads.append('X-User-Token', `${token}`);
   let reqParams = {

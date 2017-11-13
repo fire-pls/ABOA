@@ -25,6 +25,7 @@ gem 'cloudinary', '1.1.7'
 gem 'attachinary', github: 'assembler/attachinary'
 gem 'money-rails'
 gem 'stripe'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   gem 'pry-byebug'

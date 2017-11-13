@@ -27,7 +27,7 @@ document.getElementById('signin').addEventListener('submit', function(event){
   console.log(email);
   console.log(token);
   fetch(
-    `http://localhost:3000/api/v1/${directory}`/*,
+    `http://localhost:3000/api/v1/${directory}`,
     {
       method: 'GET',
       headers:
@@ -35,7 +35,7 @@ document.getElementById('signin').addEventListener('submit', function(event){
           'X-User-Email': `${email}`,
           'X-User-Token': `${token}`
         }
-    }*/
+    }
   ).then(response => response.json()).then(data => {
       (console.log(data));
     });

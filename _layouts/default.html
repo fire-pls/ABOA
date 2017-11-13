@@ -17,10 +17,17 @@
 
 
     <script src="{{- site.cookies -}}"></script>
-    <!-- <script src="{{- site.js_file -}}"></script> -->
+    <script src="{{- site.js_file -}}"></script>
     {%- if site.data.js.path contains page.url -%}
-      <script src="{{- site.js_partial -}}{{- page.url -}}.js"></script>
     {%- endif -%}
+    {%- for path_hash in site.data.js.path -%}
+      {%- assign test_url = path_hash[0] | prepend: "/" -%}
+      <p>{{test_url}}</p>
+      {%- if test_url == page.url -%}
+      <p>butthole same</p>
+        <script src="{{- site.js_partial -}}{{- path_hash[1] -}}.js"></script>
+      {%- endif -%}
+    {%- endfor -%}
   </body>
 
 </html>

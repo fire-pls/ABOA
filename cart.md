@@ -2,7 +2,7 @@
 layout: default
 title: cart
 ---
-<div class="cart">
+
+<div>
 </div>
 
-{{ page.url }}

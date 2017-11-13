@@ -5,7 +5,6 @@
  * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
  * Released under the MIT license
  */
- console.log('hello from cookie.js');
 ;(function (factory) {
   var registeredInModuleLoader = false;
   if (typeof define === 'function' && define.amd) {
@@ -164,7 +163,3 @@
 
   return init(function () {});
 }));
-
-console.log('here are teh cookies');
-let cookie = Cookies.get();
-console.log(cookie);

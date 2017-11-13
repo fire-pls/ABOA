@@ -20,3 +20,8 @@ const parseQueryString = function(url) {
 
 const params = parseQueryString(location.search);
 const currentUser = jsonCookie(Cookies.get('current_user'));
+const getPath = function(url) {
+  return url.match(/(\/ABOA\/)(\w*)/)[2] || 'home';
+}
+
+console.log(getPath(location.pathname));

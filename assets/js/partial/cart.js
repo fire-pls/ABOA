@@ -1,6 +1,10 @@
 const baseUrl = "https://aboa-v1.herokuapp.com/api/v1/";// production
 //const baseUrl = "http://localhost:3000/api/v1";
 
+const renderCart = function(){
+  console.log();
+}
+
 document.getElementById('signin').addEventListener('submit', function(event){
   event.preventDefault();
   let email = document.getElementById('email').value;

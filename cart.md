@@ -3,6 +3,6 @@ layout: default
 title: cart
 ---
 
-<div>
-</div>
+<div id="cart-panel"></div>
 
+<div id="cart-message"></div>

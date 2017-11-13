@@ -1,4 +1,4 @@
-THE_DOMAIN_REQUESTING_THIS_API = /\Ahttps:\/\/fire-pls\.github\.io\/\z/
+THE_DOMAIN_REQUESTING_THIS_API = /\Ahttps:\/\/fire-pls\.github\.io\z/
 
 require_relative 'boot'
 
@@ -40,11 +40,10 @@ module ClothingApiAdmin
     #cors options
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins
-          THE_DOMAIN_REQUESTING_THIS_API
-          # use regex
+        origins THE_DOMAIN_REQUESTING_THIS_API
+          # use regex, exclude final /
           # update constant at the top of the page accordingly
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
+        resource '*', :headers => ['X-User-Token', 'X-User-Email'], :methods => [:get, :post, :patch]
       end
     end
 

@@ -33,8 +33,10 @@ document.getElementById('signin').addEventListener('submit', function(event){
   heads.append('X-User-Token', `${token}`);
   let reqParams = {
     method: `${rMethod}`,
-    headers: heads,
-    body: `${rbody}`
+    headers: heads
+  }
+  if (rMethod !== "GET"){
+    reqParams.body = rbody;
   }
   let fullRequest = new Request(`http://localhost:3000/api/v1/${dir}`, reqParams)
   fetch(fullRequest).then(response => response.json()).then(data => {

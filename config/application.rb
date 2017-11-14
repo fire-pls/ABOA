@@ -1,3 +1,5 @@
+THE_DOMAIN_REQUESTING_THIS_API = /\Ahttps:\/\/fire-pls\.github\.io\z/
+
 require_relative 'boot'
 
 require "rails"
@@ -33,5 +35,17 @@ module ClothingApiAdmin
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+
+    #cors options
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins THE_DOMAIN_REQUESTING_THIS_API
+          # use regex, exclude final /
+          # update constant at the top of the page accordingly
+        resource '*', :headers => ['X-User-Token', 'X-User-Email'], :methods => [:get, :post, :patch]
+      end
+    end
+
   end
 end

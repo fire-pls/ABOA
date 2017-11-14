@@ -69,10 +69,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (currentUser){
     // console.log('you are signed in');
     removeFromCartIfNeeded();
+    retrieveCart();
+    renderDynamicLinks();
     renderCartItems();
     listenCartSelect();
   } else {
     // console.log('you not signed in');
+    renderDynamicLinks();
     renderSignIn();
     panel.insertAdjacentHTML('afterbegin', '<p style="color:#e44">You must be signed in to continue.</p><br>')
     signIn();

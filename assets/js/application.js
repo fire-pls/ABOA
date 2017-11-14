@@ -60,7 +60,7 @@ const renderDynamicLinks = function(){
     '<a class="page-link" href="/ABOA/shop">categories</a>';
   if (currentUser) {
     // console.log('signed in links');
-    let cartSize = jsonCookie(Cookies.get('cart')).items.length || 0;
+    let cartSize = currentCart.items.length || 0;
     ajaxLinks.insertAdjacentHTML('beforeend',
       '<a class="page-link" href="/ABOA/user">profile</a>' +
       `<a class="page-link" href="/ABOA/cart">cart(${cartSize})</a>` )
@@ -89,6 +89,8 @@ const retrieveCart = function(){
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  retrieveCart();
-  renderDynamicLinks();
+  if (currentPath !== 'cart'){
+    retrieveCart();
+    renderDynamicLinks();
+  }
 });

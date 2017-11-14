@@ -16,7 +16,7 @@ layout: default
 
   <ul class="post-list">
     {% for post in site.posts %}
-      <li>
+      <li style="margin-bottom:20px;">
         {% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}
         <span class="post-meta">{{ post.date | date: date_format }}</span>
 
@@ -27,6 +27,10 @@ layout: default
     {% endfor %}
   </ul>
 
+  <style>
+    p, hr { margin-bottom:0px; }
+  </style>
+  <hr style="width:20px; margin-bottom:10px;">
   <p class="rss-subscribe">RSS <a href="{{ "/feed.xml" | relative_url }}">subscribe</a></p>
 
 </div>

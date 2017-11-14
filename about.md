@@ -5,10 +5,12 @@ title: about
 
 This website is hosted using gh-pages, and the API itself is hosted on heroku.
 
+[ABOA project page](https://github.com/fire-pls/ABOA)
 
-[A_BOA project page](https://github.com/fire-pls/A_BOA)
+<hr>
 
 
-Website generated with [jekyll](https://github.com/jekyll/jekyll)
+Cookies stored and served thanks to [cookie.js](https://github.com/js-cookie/js-cookie)
 
-theme: [minima](https://github.com/jekyll/minima)
+
+Website generated with [jekyll](https://github.com/jekyll/jekyll) using the [minima](https://github.com/jekyll/minima) theme

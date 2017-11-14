@@ -2,4 +2,7 @@
 layout: default
 title: shop
 ---
-yaa boii
+
+<div id="shop-panel"></div>
+
+<div id="shop-message"></div>

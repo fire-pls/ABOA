@@ -17,11 +17,59 @@ const parseQueryString = function(url) {
   );
   return urlParams;
 }
-
+const apiUrl = "https://aboa-v1.herokuapp.com/api/v1/";
 const params = parseQueryString(location.search);
 const currentUser = jsonCookie(Cookies.get('current_user'));
-const getPath = function(url) {
-  return url.match(/(\/ABOA\/)(\w*)/)[2] || 'home';
+const currentPath = location.pathname.match(/(\/ABOA\/)(\w*)/)[2] || 'home';
+console.log(currentPath);
+console.log(params);
+
+////////////////////////////
+// html elements for ajax //
+////////////////////////////
+const panel = document.getElementById(`${currentPath}-panel` || undefined);
+const message = document.getElementById(`${currentPath}-message` || undefined);
+const ajaxLinks = document.getElementById("ajax-links")
+////////////////////////////
+/////////// end ////////////
+////////////////////////////
+
+
+const renderSignIn = function(){
+  panel.innerHTML =
+    '<form action="/ABOA/" id="signin">' +
+    '<input type="email" id="email" placeholder="email" class="form-control">' +
+    '<input type="text" id="token" placeholder="token" class="form-control">' +
+    '<input type="submit" value="Sign In" class="form-submit">' +
+    '</form>';
+  message.innerHTML = '<hr><p>Signing in will automatically redirect you to the homepage.</p>';
 }
 
-console.log(getPath(location.pathname));
+const signIn = function(){
+  document.getElementById('signin').addEventListener('submit', function(event){
+    let email = document.getElementById('email').value;
+    let token = document.getElementById('token').value;
+    Cookies.set('current_user', { email: email, token: token });
+  });
+}
+
+const renderDynamicLinks = function(){
+  console.log('getting dynamic linkz');
+  ajaxLinks.innerHTML =
+    '<a class="page-link" href="/ABOA/shop">categories</a>';
+  if (currentUser) {
+    // console.log('signed in links');
+    let cartSize = 0;
+    ajaxLinks.insertAdjacentHTML('beforeend',
+      '<a class="page-link" href="/ABOA/user">profile</a>' +
+      `<a class="page-link" href="/ABOA/cart">cart(${cartSize})</a>` )
+  } else {
+    // console.log('not signed in links');
+    ajaxLinks.insertAdjacentHTML('beforeend',
+      '<a class="page-link" href="/ABOA/user">sign in</a>' )
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderDynamicLinks();
+});

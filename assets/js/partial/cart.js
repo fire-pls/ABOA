@@ -32,7 +32,8 @@ const listenCartSelect = function(){
   const cartItems = Array.from(document.getElementsByTagName('cartitem'));
   cartItems.forEach((htmlElement) => {
     console.log(htmlElement);
-    htmlElement.lastChild.addEventListener('click', function(event){
+    let element = htmlElement.lastChild;
+    element.addEventListener('click', function(event){
       if (element.checked) {
         updateFormAction(`${element.value}=r`);
       } else {

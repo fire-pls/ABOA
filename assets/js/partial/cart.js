@@ -1,5 +1,3 @@
-//const baseUrl = "http://localhost:3000/api/v1";
-
 const renderCartItems = function(){
   const skeleton = document.getElementById('cart-items');
   let data = Cookies.get('cart') || retrieveCart();
@@ -22,6 +20,7 @@ const renderCartItems = function(){
       '<hr>' );
     }
   });
+}
 
 const renderCartSkeleton = function(){
   let cartParams = "";
@@ -37,7 +36,7 @@ const renderCartSkeleton = function(){
 const getCartParams = function(){
   const cartItems = document.getElementsByTagName('cartitem');
   cartItems.forEach((htmlElement) => {
-    console.log();
+    console.log(htmlElement);
   })
 }
 
@@ -51,7 +50,7 @@ const submitCart = function(){
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (currentUser) {
+  if (currentUser){
     // console.log('you are signed in');
     renderCartSkeleton();
     renderCartItems();

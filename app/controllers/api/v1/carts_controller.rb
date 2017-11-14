@@ -6,21 +6,25 @@ class Api::V1::CartsController < Api::V1::BaseController
   end
 
   def update
-    qty = cart_params[:qty]
-    size = cart_params[:size]
-    stock_id = cart_params[:stock_id]
-    if cart_params[:remove]
-      delete = @cart.items.where(stock_id:stock_id,size:size).pluck(:id)
-      delete.each { |item_id| @cart.reservations.find_by(item_id:item_id).destroy }
-      render :show
-    elsif qty < 0
-      @cart.remove_quantity(qty,size,stock_id)
-      render :show
-    elsif qty > 0
-      @cart.add_quantity_and_size(qty,size,stock_id)
-      render :show
+    if cart_params[:item_ids].any?
+      cart_params[:item_ids].each { |item_id| @cart.remove_item_by_id(item_id) }
     else
-      render_error
+      qty = cart_params[:qty]
+      size = cart_params[:size]
+      stock_id = cart_params[:stock_id]
+      if cart_params[:remove]
+        delete = @cart.items.where(stock_id:stock_id,size:size).pluck(:id)
+        delete.each { |item_id| @cart.reservations.find_by(item_id:item_id).destroy }
+        render :show
+      elsif qty < 0
+        @cart.remove_quantity(qty,size,stock_id)
+        render :show
+      elsif qty > 0
+        @cart.add_quantity_and_size(qty,size,stock_id)
+        render :show
+      else
+        render_error
+      end
     end
   end
 
@@ -57,7 +61,7 @@ class Api::V1::CartsController < Api::V1::BaseController
   end
 
   def cart_params
-    params.require(:cart).permit(:size, :qty, :stock_id, :remove)
+    params.require(:cart).permit(:size, :qty, :stock_id, :remove, item_ids: [])
   end
 
   def order_params

@@ -73,7 +73,8 @@ const renderDynamicLinks = function(){
 
 const retrieveCart = function(){
   // if no cart already
-  if (Cookies.get('cart') === undefined && currentUser) {
+  let invalidCart = (currentCart === undefined || currentCart.hasOwnProperty("error") );
+  if (invalidCart && currentUser) {
     // fetch current users cart from api
     let heads = new Headers();
     //// heads.append('Content-Type', 'application/json')

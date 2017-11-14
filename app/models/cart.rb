@@ -10,6 +10,10 @@ class Cart < ApplicationRecord
     qty*(-1).times { |i| self.reservations.find_by(item_id:items[i]).destroy }
   end
 
+  def remove_item_by_id(id)
+    self.reservations.find_by(item_id:id).destroy
+  end
+
   def add_quantity_and_size(qty, size, stock_id)
     stock = Stock.find(stock_id)
     stock_left = stock.available_items(size)

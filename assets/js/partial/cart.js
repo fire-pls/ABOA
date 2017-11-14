@@ -29,7 +29,7 @@ const updateFormAction = function(newAction){
 }
 
 const listenCartSelect = function(){
-  const cartItems = document.getElementsByTagName('cartitem');
+  const cartItems = Array.from(document.getElementsByTagName('cartitem'));
   cartItems.forEach((htmlElement) => {
     console.log(htmlElement);
     let element = htmlElement.getElementById('remove-item');

@@ -54,12 +54,12 @@ const signIn = function(){
 }
 
 const renderDynamicLinks = function(){
-  console.log('getting dynamic linkz');
+  // console.log('getting dynamic links');
   ajaxLinks.innerHTML =
     '<a class="page-link" href="/ABOA/shop">categories</a>';
   if (currentUser) {
     // console.log('signed in links');
-    let cartSize = 0;
+    let cartSize = cartCount;
     ajaxLinks.insertAdjacentHTML('beforeend',
       '<a class="page-link" href="/ABOA/user">profile</a>' +
       `<a class="page-link" href="/ABOA/cart">cart(${cartSize})</a>` )
@@ -70,6 +70,29 @@ const renderDynamicLinks = function(){
   }
 }
 
+const retrieveCart = function(){
+  // if no cart already
+  if (Cookies.get('cart') === undefined && currentUser) {
+    // fetch current users cart from api
+    let email = currentUser.email;
+    let token = currentUser.token;
+    let heads = new Headers();
+    //// heads.append('Content-Type', 'application/json')
+    heads.append('X-User-Email', `${currentUser.email}`);
+    heads.append('X-User-Token', `${token}`);
+    let reqParams = { headers: heads }
+    let fullRequest = new Request(`${apiUrl}cart`, reqParams)
+    let cartCount = 0;
+    fetch(fullRequest).then(response => response.json()).then(data => {
+      Cookies.set('cart', data);
+      if (data.items !== undefined){
+        cartCount = data.items.length;
+      }
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  retrieveCart();
   renderDynamicLinks();
 });

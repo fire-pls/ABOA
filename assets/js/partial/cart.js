@@ -2,32 +2,26 @@
 
 const renderCartItems = function(){
   const skeleton = document.getElementById('cart-items');
-  // fetch current users cart from api
-  let email = currentUser.email;
-  let token = currentUser.token;
-  let heads = new Headers();
-  //// heads.append('Content-Type', 'application/json')
-  heads.append('X-User-Email', `${email}`);
-  heads.append('X-User-Token', `${token}`);
-  let reqParams = { headers: heads }
-  let fullRequest = new Request(`${apiUrl}cart`, reqParams)
-  fetch(fullRequest).then(response => response.json()).then(data => {
-  // iterate over each cart item
-    let cartItemCount = 0;
-    console.log(data);
-      data.items.forEach((cartItem) => {
-        cartItemCount += 1;
-        skeleton.insertAdjacentHTML('beforeend',
-        `<cartitem id="item-id${cartItemCount}">` +
-        `<input type="number" id="remove-item-id${cartItemCount}" min="0" max="#{}" value="0">` +
-        `<input type="checkbox" id="remove-all-id${cartItemCount}">` +
-        '</cartitem>' +
-        '<hr>' )
-      });
+  let data = Cookies.get('cart') || retrieveCart();
+  let cartItemCount = 0
+  data.items.forEach((cartItem) => {
+    // if items to show
+    if (cartItem.items !== undefined) {
+      // show each cart item
+      cartItemCount += 1;
+      skeleton.insertAdjacentHTML('beforeend',
+      `<cartitem id="item-id${cartItem.id}">` +
+      // implement sort by SKU later
+      //`<input type="number" id="remove-item-id${cartItemCount}" min="0" max="#{}" value="0">` +
+      //`<input type="checkbox" id="remove-all-id${cartItemCount}">` +
+      //////////////////////////////
+      `<p>${cartItem.size} ${cartItem.name}</p>` +
+      '<label>Remove?</label>' +
+      `<input type="checkbox" id="remove-item" value="${cartItem.id}">` +
+      '</cartitem>' +
+      '<hr>' );
     }
-  );
-  // show each cart item
-}
+  });
 
 const renderCartSkeleton = function(){
   let cartParams = "";

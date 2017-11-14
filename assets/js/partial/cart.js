@@ -50,10 +50,11 @@ const removeFromCartIfNeeded = function(){
     heads.append('X-User-Email', `${currentUser.email}`);
     heads.append('X-User-Token', `${currentUser.token}`);
     let ids = Object.keys(params);
+    let body = JSON.stringify(`{cart:{item_ids:${ids}}}`);
     let reqParams = {
       method: 'PATCH',
       headers: heads,
-      body: JSON.stringify(`{cart:{item_ids:${ids}}}`);
+      body: body
     };
     let fullRequest = new Request(`${apiUrl}cart`, reqParams)
     fetch(fullRequest).then(response => response.json()).then(data => {

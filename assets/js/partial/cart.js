@@ -43,10 +43,19 @@ const listenCartSelect = function(){
   });
 }
 
+const removeFromCartIfNeeded = function(){
+  if (params) {
+    Object.keys(params).forEach((key) => {
+      parseInt(key);
+    })
+  }
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
   if (currentUser){
     // console.log('you are signed in');
+    removeFromCartIfNeeded();
     renderCartItems();
     listenCartSelect();
   } else {

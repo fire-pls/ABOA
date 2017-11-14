@@ -44,10 +44,22 @@ const listenCartSelect = function(){
 }
 
 const removeFromCartIfNeeded = function(){
-  if (params) {
-    Object.keys(params).forEach((key) => {
-      parseInt(key);
-    })
+  if (params && currentUser) {
+    let heads = new Headers();
+    heads.append('Content-Type', 'application/json')
+    heads.append('X-User-Email', `${currentUser.email}`);
+    heads.append('X-User-Token', `${currentUser.token}`);
+    let ids = Object.keys(params);
+    let reqParams = {
+      method: 'PATCH',
+      headers: heads,
+      body: JSON.stringify(`{cart:{item_ids:${ids}}}`);
+    };
+    let fullRequest = new Request(`${apiUrl}cart`, reqParams)
+    fetch(fullRequest).then(response => response.json()).then(data => {
+      Cookies.set('cart', data);
+      currentCart = jsonCookie(Cookies.get('cart'));
+    });
   }
 }
 

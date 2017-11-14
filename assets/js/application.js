@@ -75,12 +75,10 @@ const retrieveCart = function(){
   // if no cart already
   if (Cookies.get('cart') === undefined && currentUser) {
     // fetch current users cart from api
-    let email = currentUser.email;
-    let token = currentUser.token;
     let heads = new Headers();
     //// heads.append('Content-Type', 'application/json')
     heads.append('X-User-Email', `${currentUser.email}`);
-    heads.append('X-User-Token', `${token}`);
+    heads.append('X-User-Token', `${currentUser.token}`);
     let reqParams = { headers: heads };
     let fullRequest = new Request(`${apiUrl}cart`, reqParams)
     fetch(fullRequest).then(response => response.json()).then(data => {

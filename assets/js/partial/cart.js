@@ -15,12 +15,13 @@ const renderCartItems = function(){
   // iterate over each cart item
     let cartItemCount = 0;
     console.log(data);
-      data.forEach((cartItem) => {
+      data.items.forEach((cartItem) => {
         cartItemCount += 1;
         skeleton.insertAdjacentHTML('beforeend',
-        `<div id="cart-item-${cartItemCount}">` +
-        '<input type="">' +
-        '</div>' +
+        `<cartitem id="item-id${cartItemCount}">` +
+        `<input type="number" id="remove-item-id${cartItemCount}" min="0" max="#{}" value="0">` +
+        `<input type="checkbox" id="remove-all-id${cartItemCount}">` +
+        '</cartitem>' +
         '<hr>' )
       });
     }
@@ -39,16 +40,18 @@ const renderCartSkeleton = function(){
     '<hr><p>Checking out relies on cookies.</p>';
 }
 
-const checkoutCart = function(){
+const getCartParams = function(){
+  const cartItems = document.getElementsByTagName('cartitem');
+  cartItems.forEach((htmlElement) => {
+    console.log();
+  })
+}
+
+const submitCart = function(){
+  let count = 0;
   document.getElementById('cart-form').addEventListener('submit', function(event){
     event.preventDefault();
-    let email = document.getElementById('email').value;
-    let token = document.getElementById('token').value;
-    let dir = document.getElementById('directory').value;
-    let rbody = document.getElementById('request-body').value;
-    let rMethod = document.getElementById('request-method').value;
-    let radio = document.getElementById('remove-all').checked;
-    console.log(radio);
+    getCartParams();
   });
 }
 

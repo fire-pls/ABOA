@@ -59,7 +59,7 @@ const renderDynamicLinks = function(){
     '<a class="page-link" href="/ABOA/shop">categories</a>';
   if (currentUser) {
     // console.log('signed in links');
-    let cartSize = Cookies.get('cart').items.length || 0;
+    let cartSize = jsonCookie(Cookies.get('cart')).items.length || 0;
     ajaxLinks.insertAdjacentHTML('beforeend',
       '<a class="page-link" href="/ABOA/user">profile</a>' +
       `<a class="page-link" href="/ABOA/cart">cart(${cartSize})</a>` )
@@ -80,7 +80,7 @@ const retrieveCart = function(){
     //// heads.append('Content-Type', 'application/json')
     heads.append('X-User-Email', `${currentUser.email}`);
     heads.append('X-User-Token', `${token}`);
-    let reqParams = { headers: heads }
+    let reqParams = { headers: heads };
     let fullRequest = new Request(`${apiUrl}cart`, reqParams)
     fetch(fullRequest).then(response => response.json()).then(data => {
       Cookies.set('cart', data);

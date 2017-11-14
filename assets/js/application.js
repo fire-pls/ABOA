@@ -20,6 +20,7 @@ const parseQueryString = function(url) {
 const apiUrl = "https://aboa-v1.herokuapp.com/api/v1/";
 const params = parseQueryString(location.search);
 const currentUser = jsonCookie(Cookies.get('current_user'));
+let currentCart = jsonCookie(Cookies.get('cart'));
 const currentPath = location.pathname.match(/(\/ABOA\/)(\w*)/)[2] || 'home';
 console.log(currentPath);
 console.log(params);
@@ -84,6 +85,7 @@ const retrieveCart = function(){
     let fullRequest = new Request(`${apiUrl}cart`, reqParams)
     fetch(fullRequest).then(response => response.json()).then(data => {
       Cookies.set('cart', data);
+      currentCart = jsonCookie(Cookies.get('cart'));
     });
   }
 }

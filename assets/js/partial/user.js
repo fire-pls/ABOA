@@ -1,7 +1,7 @@
 const renderUserPanel = function(){
   panel.innerHTML =
     '<a href="/ABOA/cart">View your cart</a>' +
-    '<div id="cart"></div>';
+    '<div id="cart-items"></div>';
   message.innerHTML = '<hr><a href="/ABOA/" id="signout">Log Out</a>';
 }
 
@@ -12,7 +12,6 @@ const signOut = function(){
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log('ready boo <3');
   if (currentUser) {
     console.log('you are signed in');
     renderUserPanel();

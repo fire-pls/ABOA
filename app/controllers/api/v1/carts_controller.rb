@@ -8,6 +8,7 @@ class Api::V1::CartsController < Api::V1::BaseController
   def update
     if cart_params[:item_ids].any?
       cart_params[:item_ids].each { |item_id| @cart.remove_item_by_id(item_id) }
+      render :show
     else
       qty = cart_params[:qty]
       size = cart_params[:size]

@@ -58,8 +58,14 @@ const removeFromCartIfNeeded = function(){
     };
     let fullRequest = new Request(`${apiUrl}cart`, reqParams)
     fetch(fullRequest).then(response => response.json()).then(data => {
-      Cookies.set('cart', data);
-      currentCart = jsonCookie(Cookies.get('cart'));
+      // dont save data if it has error, just re-retrieve cart info
+      if (data.hasOwnProperty("error")) {
+        Cookies.remove('cart');
+        retrieveCart();
+      } else {
+        Cookies.set('cart', data);
+        currentCart = jsonCookie(Cookies.get('cart'));
+      }
     });
   }
 }

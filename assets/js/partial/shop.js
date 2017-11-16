@@ -1,44 +1,46 @@
 const requestApi = function(size = undefined, qty = undefined, idStock = undefined){
   // if size and qty and stock id provided, change to PATCH request
-  console.log('begin api request');
-  let body = undefined;
-  let method = 'GET';
-  if (size && qty && idStock){
-    body = JSON.stringify({size:{size: size, qty: parseInt(qty), stock_id: parseInt(idStock)}});
-    method = 'PATCH';
-  }
-  let reqParams = {
-    method: method
-  }
-  let stock = parseInt(params.stock);
-  let category = params.category;
-  let destination = `categories`;
-  if (category) {
-    destination = `c/${category}`;
-    if (stock) {
-      destination += `/${stock}`;
+  return new Promise(resolve =>{
+    console.log('begin api request');
+    let body = undefined;
+    let method = 'GET';
+    if (size && qty && idStock){
+      body = JSON.stringify({size:{size: size, qty: parseInt(qty), stock_id: parseInt(idStock)}});
+      method = 'PATCH';
     }
-  }
-  if (currentCart && currentUser && body) {
-    let heads = new Headers();
-    heads.append('X-User-Email', `${currentUser.email}`);
-    heads.append('X-User-Token', `${currentUser.token}`);
-    heads.append('Content-Type', 'application/json');
-    reqParams.headers = heads;
-    reqParams.body = body;
-    destination = 'cart';
-  }
-  let fullRequest = new Request(`${apiUrl}${destination}`, reqParams)
-  fetch(fullRequest).then(response => response.json()).then(data => {
-    if (method === 'PATCH') {
-      Cookies.set('cart', data);
-      currentCart = jsonCookie(Cookies.get('cart'));
-      return console.log('you patched the cart');
-    } else {
-      console.log('you query stock');
-      console.log(data);
-      return data;
+    let reqParams = {
+      method: method
     }
+    let stock = parseInt(params.stock);
+    let category = params.category;
+    let destination = `categories`;
+    if (category) {
+      destination = `c/${category}`;
+      if (stock) {
+        destination += `/${stock}`;
+      }
+    }
+    if (currentCart && currentUser && body) {
+      let heads = new Headers();
+      heads.append('X-User-Email', `${currentUser.email}`);
+      heads.append('X-User-Token', `${currentUser.token}`);
+      heads.append('Content-Type', 'application/json');
+      reqParams.headers = heads;
+      reqParams.body = body;
+      destination = 'cart';
+    }
+    let fullRequest = new Request(`${apiUrl}${destination}`, reqParams)
+    fetch(fullRequest).then(response => response.json()).then(data => {
+      if (method === 'PATCH') {
+        Cookies.set('cart', data);
+        currentCart = jsonCookie(Cookies.get('cart'));
+        resolve(console.log('you patched the cart'));
+      } else {
+        console.log('you query stock');
+        console.log(data);
+        resolve(data);
+      }
+    });
   });
 }
 

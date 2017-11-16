@@ -4,7 +4,7 @@ const requestApi = function(size = undefined, qty = undefined, idStock = undefin
     console.log('begin api request');
     let body = undefined;
     let method = 'GET';
-    if (size && qty && idStock){
+    if (size && qty && idStock && currentUser){
       body = JSON.stringify({size:{size: size, qty: parseInt(qty), stock_id: parseInt(idStock)}});
       method = 'PATCH';
     }

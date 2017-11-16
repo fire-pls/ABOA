@@ -11,6 +11,7 @@ const renderCartItems = function(){
       '</cartitem>' +
       '<hr>' );
   });
+  skeleton.insertAdjacentHTML('beforeend', '<input id="update-cart" type="button" disabled>update cart<>')
 }
 
 const updateFormAction = function(newAction){
@@ -18,6 +19,10 @@ const updateFormAction = function(newAction){
   let redirect = form.getAttribute('action');
   if (redirect === "#") {
     form.setAttribute('action', `/ABOA/cart?${newAction}&`);
+    form.removeAttribute('disabled')
+  } else if (redirect === "/ABOA/cart?") {
+    form.setAttribute('action', "#");
+    document.getElementById('update-cart').setAttribute('disabled', true);
   } else {
     if (newAction.charAt(0) === '!') {
       let str = `${newAction.slice(1)}=r&`;
@@ -31,7 +36,6 @@ const updateFormAction = function(newAction){
 const listenCartSelect = function(){
   const cartItems = Array.from(document.getElementsByTagName('cartitem'));
   cartItems.forEach((htmlElement) => {
-    console.log(htmlElement);
     let element = htmlElement.lastChild;
     element.addEventListener('click', function(event){
       if (element.checked) {

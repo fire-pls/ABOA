@@ -8,6 +8,7 @@ const renderUserPanel = function(){
 const signOut = function(){
   document.getElementById('signout').addEventListener('click', function(event){
     Cookies.remove('current_user');
+    Cookies.remove('cart');
   });
 }
 

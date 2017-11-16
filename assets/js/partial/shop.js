@@ -53,8 +53,7 @@ const renderStoreCategories = async function(){
       `<p>${categoryReference.name}</p>` +
       `<p>Listed Items: ${categoryReference.article_count}</p>` +
       '</div>');
-  });
-  listenCategorySelect();
+  }).then(() => listenCategorySelect(););
 }
 
 const listenCategorySelect = function(){
@@ -79,8 +78,7 @@ const renderCategoryItems = async function(){
       `<p>${itemReference.name}</p>` +
       `<p>${itemReference.price_formatted}</p>` +
       '</div>');
-  });
-  listenItemSelect();
+  }).then(()=>listenItemSelect(););
 }
 
 const listenItemSelect = function(){
@@ -122,7 +120,7 @@ const renderItem = async function(){
   message.innerHTML =
   '<hr>' +
   '<div id="price-place">' +
-  `<h3>Price: ${data.price}</h3>` +
+  `<h3>Price: ${data.price_formatted}</h3>` +
   '<div id="size-place"></div>' +
   '</div>' +
   '<form id="item-form" action="/ABOA/cart">' +
@@ -133,9 +131,9 @@ const renderItem = async function(){
   sizes.forEach((sizeObject) =>{
     let theSize = sizeObject.size;
     document.getElementById('size-options').insertAdjacentHTML('beforeend',
-      `<input type="radio" id="size-option" value="${theSize}">${theSize}</radio>`);
+      `<input type="radio" name="size-select" id="size-option" value="${theSize}">${theSize}</radio>`);
     document.getElementById('size-place').insertAdjacentHTML('beforeend',
-      `<p>${theSize}: ${sizeObject.qty_left} available</p>`);
+      `<p>${theSize}: ${sizeObject.reamining} available</p>`);
     listenSizeSelect(sizeHash);
     listenAddCart();
   });

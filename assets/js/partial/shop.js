@@ -108,7 +108,8 @@ const renderItem = async function(){
   let sizeHash = {};
   sizes.forEach((sizeItem)=>{
     let sizeStr = sizeItem.size;
-    sizeHash.sizeStr = sizeItem.remaining;
+    let remain = sizeItem.remaining;
+    sizeHash.sizeStr = remain;
   })
   let photos = data.photos;
   params.stock = parseInt(data.id);
@@ -135,7 +136,7 @@ const renderItem = async function(){
     document.getElementById('size-options').insertAdjacentHTML('beforeend',
       `<input type="radio" name="size-select" id="size-option" value="${theSize}">${theSize}</radio>`);
     document.getElementById('size-place').insertAdjacentHTML('beforeend',
-      `<p>${theSize}: ${sizeObject.reamining} available</p>`);
+      `<p>${theSize}: ${sizeObject.remaining} available</p>`);
     listenSizeSelect(sizeHash);
     listenAddCart();
   });
@@ -146,8 +147,8 @@ const listenSizeSelect = function(sizeHash){
   sizeSelectors.forEach((htmlElement) =>{
     htmlElement.addEventListener('click', () => {
       let maxVal = document.getElementById('item-qty');
-      let sizeQuery = htmlElement.value
-      maxVal.setAttribute('max', `${sizeHash.sizeQuery}`);
+      let sizeQuery = htmlElement.value;
+      maxVal.setAttribute('max', sizeHash[`${sizeQuery}`]);
       // below simply removes disabled checkout cart
       let button = document.querySelector('input[type="submit"]');
       if (button.hasAttribute('disabled')) {

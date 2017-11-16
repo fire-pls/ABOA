@@ -59,21 +59,22 @@ const signIn = function(){
 }
 
 const renderDynamicLinks = async function(){
-  await retrieveCart();
-  // console.log('getting dynamic links');
-  ajaxLinks.innerHTML =
-    '<a class="page-link" href="/ABOA/shop">categories</a>';
-  if (currentUser) {
-    // console.log('signed in links');
-    let cartSize = currentCart.items.length || 0;
-    ajaxLinks.insertAdjacentHTML('beforeend',
-      '<a class="page-link" href="/ABOA/user">profile</a>' +
-      `<a class="page-link" href="/ABOA/cart">cart(${cartSize})</a>` )
-  } else {
-    // console.log('not signed in links');
-    ajaxLinks.insertAdjacentHTML('beforeend',
-      '<a class="page-link" href="/ABOA/user">sign in</a>' )
-  }
+  await retrieveCart().then(()=>{
+    // console.log('getting dynamic links');
+    ajaxLinks.innerHTML =
+      '<a class="page-link" href="/ABOA/shop">categories</a>';
+    if (currentUser) {
+      // console.log('signed in links');
+      let cartSize = currentCart.items.length || 0;
+      ajaxLinks.insertAdjacentHTML('beforeend',
+        '<a class="page-link" href="/ABOA/user">profile</a>' +
+        `<a class="page-link" href="/ABOA/cart">cart(${cartSize})</a>` )
+    } else {
+      // console.log('not signed in links');
+      ajaxLinks.insertAdjacentHTML('beforeend',
+        '<a class="page-link" href="/ABOA/user">sign in</a>' )
+    }
+  });
 }
 
 const retrieveCart = function(){

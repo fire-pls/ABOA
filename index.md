@@ -11,7 +11,7 @@ I suggest starting with [shop]({{ site.url }}/ABOA/shop) and it will
 list all categories for the store. From there you can click on a category to refine
 your results further.
 <br style="margin-bottom:20px;">
-If you have an account, you can [sign in]({{ site.url }}/ABOA/profile) to view your [cart]({{ site.url }}/ABOA/cart). The site is still early in production, so at the moment you cannot sign up.
+If you have an account, you can [sign in]({{ site.url }}/ABOA/user) to view your [cart]({{ site.url }}/ABOA/cart). The site is still early in production, so at the moment you cannot sign up.
 
 <hr style="width:60px; margin:20px 0px 15px 0px;">
 

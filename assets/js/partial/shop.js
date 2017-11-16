@@ -165,7 +165,9 @@ const requestApi = function(size = undefined, qty = undefined, idStock = undefin
     if (method === 'PATCH') {
       Cookies.set('cart', data);
       currentCart = jsonCookie(Cookies.get('cart'));
+      return console.log('you patched the cart');
     } else {
+      console.log('you query stock');
       return data;
     }
   });

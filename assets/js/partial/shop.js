@@ -58,7 +58,7 @@ const renderStoreCategories = async function(){
 }
 
 const listenCategorySelect = function(){
-  document.querySelectorAll('category-link').forEach((htmlElement) =>{
+  document.querySelectorAll('#category-link').forEach((htmlElement) =>{
     //when selected, query api for that item & rerender html
     htmlElement.addEventListener('click', ()=>{
       let choice = htmlElement.getAttribute('value');
@@ -84,7 +84,7 @@ const renderCategoryItems = async function(){
 }
 
 const listenItemSelect = function(){
-  document.querySelectorAll('item-link').forEach((htmlElement) =>{
+  document.querySelectorAll('#item-link').forEach((htmlElement) =>{
     //when selected, query api for that item & rerender html
     htmlElement.addEventListener('click', ()=>{
       let choice = parseInt(htmlElement.getAttribute('value'));

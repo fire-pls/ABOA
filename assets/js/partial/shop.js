@@ -49,22 +49,23 @@ const renderStoreCategories = async function(){
   let categories = await requestApi();
   categories.forEach((categoryReference) =>{
     panel.insertAdjacentHTML('afterbegin',
-      `<div style="background-color:#faa;" id="category-link" value="${categoryReference.id}">` +
+      `<div style="background-color:#faa;" id="category-link" value="${categoryReference.name}">` +
       `<p>${categoryReference.name}</p>` +
       `<p>Listed Items: ${categoryReference.article_count}</p>` +
       '</div>');
-  }).then(() => listenCategorySelect(););
+  });
+  listenCategorySelect();
 }
 
 const listenCategorySelect = function(){
   document.querySelectorAll('category-link').forEach((htmlElement) =>{
     //when selected, query api for that item & rerender html
     htmlElement.addEventListener('click', ()=>{
-      let choice = htmlElement.value;
+      let choice = htmlElement.getAttribute('value');
       params.category = `${choice}`;
       window.history.pushState("string", "Title", `${location.href}?category=${choice}`);
       clearHtml();
-      renderItem();
+      renderCategoryItems();
     });
   });
 }
@@ -78,16 +79,17 @@ const renderCategoryItems = async function(){
       `<p>${itemReference.name}</p>` +
       `<p>${itemReference.price_formatted}</p>` +
       '</div>');
-  }).then(()=>listenItemSelect(););
+  });
+  listenItemSelect();
 }
 
 const listenItemSelect = function(){
   document.querySelectorAll('item-link').forEach((htmlElement) =>{
     //when selected, query api for that item & rerender html
     htmlElement.addEventListener('click', ()=>{
-      let choice = htmlElement.value;
+      let choice = parseInt(htmlElement.getAttribute('value'));
       params.stock = parseInt(`${choice}`);
-      window.history.pushState("string", "Title", `${location.href}&stock=${choice}`);
+      window.history.pushState("string", "Title", `${location.href}?category=${params.category}&stock=${choice}`);
       clearHtml();
       renderItem();
     });

@@ -126,7 +126,7 @@ const renderItem = async function(){
   `<h3>Price: ${data.price_formatted}</h3>` +
   '<div id="size-place"></div>' +
   '</div>' +
-  '<form id="item-form" action="/ABOA/cart">' +
+  '<form id="item-form" action="/ABOA/cart" hidden>' +
   '<div id="size-options"></div>' +
   '<input type="number" min="0" max="0" id="item-qty">' +
   '<input type="submit" value="Add to Cart" disabled>' +
@@ -137,8 +137,13 @@ const renderItem = async function(){
       `<input type="radio" name="size-select" id="size-option" value="${theSize}">${theSize}</radio>`);
     document.getElementById('size-place').insertAdjacentHTML('beforeend',
       `<p>${theSize}: ${sizeObject.remaining} available</p>`);
-    listenSizeSelect(sizeHash);
-    listenAddCart();
+    if (currentUser) {
+      document.getElementById('item-form').removeAttribute('hidden');
+      listenSizeSelect(sizeHash);
+      listenAddCart();
+    } else {
+      message.insertAdjacentHTML('beforeend', '<p style="color:#e44">You must be signed in to add items.</p>')
+    }
   });
 }
 
@@ -164,7 +169,7 @@ const listenAddCart = async function(){
     let size = document.querySelector('input[id="size-option"]:checked').value;
     let qty = parseInt(document.getElementById('item-qty').value);
     let stock = params.stock;
-    requestApi(size, qty, stock).then(() => {window.location.replace('/ABOA/cart')});
+    await requestApi(size, qty, stock).then(() => {window.location.replace('/ABOA/cart')});
   });
 }
 

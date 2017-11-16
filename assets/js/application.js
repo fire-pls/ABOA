@@ -58,7 +58,8 @@ const signIn = function(){
   });
 }
 
-const renderDynamicLinks = function(){
+const renderDynamicLinks = async function(){
+  await retrieveCart();
   // console.log('getting dynamic links');
   ajaxLinks.innerHTML =
     '<a class="page-link" href="/ABOA/shop">categories</a>';
@@ -75,7 +76,7 @@ const renderDynamicLinks = function(){
   }
 }
 
-const retrieveCart = async function(){
+const retrieveCart = function(){
   return new Promise(resolve => {
 
   // if no cart already
@@ -99,8 +100,7 @@ const retrieveCart = async function(){
 
 document.addEventListener("DOMContentLoaded", () => {
   if (currentPath !== 'cart'){
-    retrieveCart().then(()=>{
-      renderDynamicLinks();
-    });
+    retrieveCart();
+    renderDynamicLinks();
   }
 });

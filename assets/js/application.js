@@ -75,7 +75,9 @@ const renderDynamicLinks = function(){
   }
 }
 
-const retrieveCart = function(){
+const retrieveCart = async function(){
+  return new Promise(resolve => {
+
   // if no cart already
   let invalidCart = (currentCart === undefined || currentCart.hasOwnProperty("error") );
   if (invalidCart && currentUser) {
@@ -89,13 +91,16 @@ const retrieveCart = function(){
     fetch(fullRequest).then(response => response.json()).then(data => {
       Cookies.set('cart', data);
       currentCart = jsonCookie(Cookies.get('cart'));
+      resolve(currentCart);
     });
   }
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   if (currentPath !== 'cart'){
-    retrieveCart();
-    renderDynamicLinks();
+    retrieveCart().then(()=>{
+      renderDynamicLinks();
+    });
   }
 });

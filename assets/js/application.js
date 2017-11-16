@@ -58,47 +58,44 @@ const signIn = function(){
   });
 }
 
-const renderDynamicLinks = async function(){
-  await retrieveCart().then(()=>{
-    // console.log('getting dynamic links');
-    ajaxLinks.innerHTML =
-      '<a class="page-link" href="/ABOA/shop">categories</a>';
-    if (currentUser) {
-      // console.log('signed in links');
-      let cartSize = currentCart.items.length || 0;
-      ajaxLinks.insertAdjacentHTML('beforeend',
-        '<a class="page-link" href="/ABOA/user">profile</a>' +
-        `<a class="page-link" href="/ABOA/cart">cart(${cartSize})</a>` )
-    } else {
-      // console.log('not signed in links');
-      ajaxLinks.insertAdjacentHTML('beforeend',
-        '<a class="page-link" href="/ABOA/user">sign in</a>' )
-    }
-  });
+const renderDynamicLinks = function(){
+  // console.log('getting dynamic links');
+  ajaxLinks.innerHTML =
+    '<a class="page-link" href="/ABOA/shop">categories</a>';
+  if (currentUser) {
+    // console.log('signed in links');
+    let cartSize = currentCart.items.length || 0;
+    ajaxLinks.insertAdjacentHTML('beforeend',
+      '<a class="page-link" href="/ABOA/user">profile</a>' +
+      `<a class="page-link" href="/ABOA/cart">cart(${cartSize})</a>` )
+  } else {
+    // console.log('not signed in links');
+    ajaxLinks.insertAdjacentHTML('beforeend',
+      '<a class="page-link" href="/ABOA/user">sign in</a>' )
+  }
 }
 
 const retrieveCart = function(){
-  return new Promise(resolve=>{
-    // if no cart already
-    let invalidCart = (currentCart === undefined || currentCart.hasOwnProperty("error") );
-    if (invalidCart && currentUser) {
-      // fetch current users cart from api
-      let heads = new Headers();
-      //// heads.append('Content-Type', 'application/json')
-      heads.append('X-User-Email', `${currentUser.email}`);
-      heads.append('X-User-Token', `${currentUser.token}`);
-      let reqParams = { headers: heads };
-      let fullRequest = new Request(`${apiUrl}cart`, reqParams)
-      fetch(fullRequest).then(response => response.json()).then(data => {
-        Cookies.set('cart', data);
-        currentCart = jsonCookie(Cookies.get('cart'));
-      });
-    }
-  });
+  // if no cart already
+  let invalidCart = (currentCart === undefined || currentCart.hasOwnProperty("error") );
+  if (invalidCart && currentUser) {
+    // fetch current users cart from api
+    let heads = new Headers();
+    //// heads.append('Content-Type', 'application/json')
+    heads.append('X-User-Email', `${currentUser.email}`);
+    heads.append('X-User-Token', `${currentUser.token}`);
+    let reqParams = { headers: heads };
+    let fullRequest = new Request(`${apiUrl}cart`, reqParams)
+    fetch(fullRequest).then(response => response.json()).then(data => {
+      Cookies.set('cart', data);
+      currentCart = jsonCookie(Cookies.get('cart'));
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   if (currentPath !== 'cart'){
+    retrieveCart();
     renderDynamicLinks();
   }
 });

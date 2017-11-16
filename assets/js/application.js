@@ -98,7 +98,6 @@ const retrieveCart = function(){
 
 document.addEventListener("DOMContentLoaded", () => {
   if (currentPath !== 'cart'){
-    retrieveCart();
     renderDynamicLinks();
   }
 });

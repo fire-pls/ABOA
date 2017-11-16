@@ -44,8 +44,7 @@ const requestApi = function(size = undefined, qty = undefined, idStock = undefin
 
 const renderStoreCategories = function(){
   console.log('render all categories');
-  let allCategories = requestApi();
-  requestApi.then(data => data.forEach((categoryReference) =>{
+  requestApi().then(data => data.forEach((categoryReference) =>{
     panel.insertAdjacentHTML('afterbegin',
       `<div style="background-color:#faa;" id="category-link" value="${categoryReference.id}">` +
       `<p>${categoryReference.name}</p>` +

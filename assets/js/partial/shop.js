@@ -137,14 +137,14 @@ const renderItem = async function(){
       `<input type="radio" name="size-select" id="size-option" value="${theSize}">${theSize}</radio>`);
     document.getElementById('size-place').insertAdjacentHTML('beforeend',
       `<p>${theSize}: ${sizeObject.remaining} available</p>`);
-    if (currentUser) {
-      document.getElementById('item-form').removeAttribute('hidden');
-      listenSizeSelect(sizeHash);
-      listenAddCart();
-    } else {
-      message.insertAdjacentHTML('beforeend', '<p style="color:#e44">You must be signed in to add items.</p>')
-    }
   });
+  if (currentUser) {
+    document.getElementById('item-form').removeAttribute('hidden');
+    listenSizeSelect(sizeHash);
+    listenAddCart();
+  } else {
+    message.insertAdjacentHTML('beforeend', '<p style="color:#e44">You must be signed in to purchase items.</p>')
+  }
 }
 
 const listenSizeSelect = function(sizeHash){
@@ -169,7 +169,7 @@ const listenAddCart = function(){
     let size = document.querySelector('input[id="size-option"]:checked').value;
     let qty = parseInt(document.getElementById('item-qty').value);
     let stock = params.stock;
-    await requestApi(size, qty, stock).then(() => {window.location.replace('/ABOA/cart')});
+    await requestApi(size, qty, stock).then(() => {console.log('request happened')});//{window.location.replace('/ABOA/cart')});
   });
 }
 

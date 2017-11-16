@@ -166,7 +166,7 @@ const requestApi = function(size, qty, idStock){
       Cookies.set('cart', data);
       currentCart = jsonCookie(Cookies.get('cart'));
     } else {
-      return JSON.parse(data);
+      return data;
     }
   });
 }

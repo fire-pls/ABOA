@@ -1,5 +1,4 @@
-
-const requestApi = function(size = undefined, qty = undefined, idStock = undefined){
+const requestApi = async function(size = undefined, qty = undefined, idStock = undefined){
   // if size and qty and stock id provided, change to PATCH request
   console.log('begin api request');
   let body = undefined;

@@ -89,7 +89,7 @@ const listenItemSelect = function(){
     htmlElement.addEventListener('click', ()=>{
       let choice = parseInt(htmlElement.getAttribute('value'));
       params.stock = parseInt(`${choice}`);
-      window.history.pushState("string", "Title", `${location.href}?category=${params.category}&stock=${choice}`);
+      window.history.pushState("string", "Title", `${location.href}&stock=${choice}`);
       clearHtml();
       renderItem();
     });

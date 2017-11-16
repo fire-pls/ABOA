@@ -164,7 +164,7 @@ const listenAddCart = async function(){
     let size = document.querySelector('input[id="size-option"]:checked').value;
     let qty = parseInt(document.getElementById('item-qty').value);
     let stock = params.stock;
-    requestApi(size, qty, stock).then(() => {window.location.replace('/cart')});
+    requestApi(size, qty, stock).then(() => {window.location.replace('/ABOA/cart')});
   });
 }
 

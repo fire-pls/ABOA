@@ -5,7 +5,7 @@ const requestApi = function(size = undefined, qty = undefined, idStock = undefin
     let body = undefined;
     let method = 'GET';
     if (size && qty && idStock && currentUser){
-      body = JSON.stringify({size:{size: size, qty: parseInt(qty), stock_id: parseInt(idStock)}});
+      body = JSON.stringify({cart:{size: size, qty: parseInt(qty), stock_id: parseInt(idStock)}});
       method = 'PATCH';
     }
     let reqParams = {
@@ -169,7 +169,7 @@ const listenAddCart = function(){
     let size = document.querySelector('input[id="size-option"]:checked').value;
     let qty = parseInt(document.getElementById('item-qty').value);
     let stock = params.stock;
-    await requestApi(size, qty, stock).then(() => {console.log('request happened')});//{window.location.replace('/ABOA/cart')});
+    await requestApi(size, qty, stock).then(() => {window.location.replace('/ABOA/cart')});
   });
 }
 

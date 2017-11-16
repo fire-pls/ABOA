@@ -121,11 +121,14 @@ const listenAddCart = function(){
 
 const initialPageContent = function(){
   if (isEmpty(params)) {
+    console.log('no params given, rendering all categories');
     renderStoreCategories();
     listenCategorySelect();
   } else if (params.hasOwnProperty('category') && params.hasOwnProperty('stock')){
+    console.log('category and stock given, rendering item');
     renderItem();
   } else {
+    console.log('category given, rendering all items from category');
     renderCategoryItems();
     listenItemSelect();
   }
@@ -133,6 +136,7 @@ const initialPageContent = function(){
 
 const requestApi = function(size = undefined, qty = undefined, idStock = undefined){
   // if size and qty and stock id provided, change to PATCH request
+  console.log('begin api request');
   let body = undefined;
   let method = 'GET';
   if (size && qty && idStock){
@@ -168,6 +172,7 @@ const requestApi = function(size = undefined, qty = undefined, idStock = undefin
       return console.log('you patched the cart');
     } else {
       console.log('you query stock');
+      console.log(data);
       return data;
     }
   });

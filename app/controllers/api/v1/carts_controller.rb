@@ -6,7 +6,7 @@ class Api::V1::CartsController < Api::V1::BaseController
   end
 
   def update
-    if cart_params[:item_ids].any?
+    unless cart_params[:item_ids].nil?
       cart_params[:item_ids].each { |item_id| @cart.remove_item_by_id(item_id) }
       render :show
     else

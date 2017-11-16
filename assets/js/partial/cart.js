@@ -11,7 +11,7 @@ const renderCartItems = function(){
       '</cartitem>' +
       '<hr>' );
   });
-  skeleton.insertAdjacentHTML('beforeend', '<input id="update-cart" type="button" disabled>update cart<>')
+  skeleton.insertAdjacentHTML('beforeend', '<input id="update-cart" type="button" disabled value="Update Cart">')
 }
 
 const updateFormAction = function(newAction){

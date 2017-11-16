@@ -131,7 +131,7 @@ const initialPageContent = function(){
   }
 }
 
-const requestApi = function(size, qty, idStock){
+const requestApi = function(size = undefined, qty = undefined, idStock = undefined){
   // if size and qty and stock id provided, change to PATCH request
   let body = undefined;
   let method = 'GET';

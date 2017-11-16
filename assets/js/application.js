@@ -77,24 +77,22 @@ const renderDynamicLinks = async function(){
 }
 
 const retrieveCart = function(){
-  return new Promise(resolve => {
-
-  // if no cart already
-  let invalidCart = (currentCart === undefined || currentCart.hasOwnProperty("error") );
-  if (invalidCart && currentUser) {
-    // fetch current users cart from api
-    let heads = new Headers();
-    //// heads.append('Content-Type', 'application/json')
-    heads.append('X-User-Email', `${currentUser.email}`);
-    heads.append('X-User-Token', `${currentUser.token}`);
-    let reqParams = { headers: heads };
-    let fullRequest = new Request(`${apiUrl}cart`, reqParams)
-    fetch(fullRequest).then(response => response.json()).then(data => {
-      Cookies.set('cart', data);
-      currentCart = jsonCookie(Cookies.get('cart'));
-      resolve(currentCart);
-    });
-  }
+  return new Promise(resolve=>{
+    // if no cart already
+    let invalidCart = (currentCart === undefined || currentCart.hasOwnProperty("error") );
+    if (invalidCart && currentUser) {
+      // fetch current users cart from api
+      let heads = new Headers();
+      //// heads.append('Content-Type', 'application/json')
+      heads.append('X-User-Email', `${currentUser.email}`);
+      heads.append('X-User-Token', `${currentUser.token}`);
+      let reqParams = { headers: heads };
+      let fullRequest = new Request(`${apiUrl}cart`, reqParams)
+      fetch(fullRequest).then(response => response.json()).then(data => {
+        Cookies.set('cart', data);
+        currentCart = jsonCookie(Cookies.get('cart'));
+      });
+    }
   });
 }
 

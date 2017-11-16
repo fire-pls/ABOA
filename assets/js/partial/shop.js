@@ -42,16 +42,17 @@ const requestApi = function(size = undefined, qty = undefined, idStock = undefin
   });
 }
 
-const renderStoreCategories = function(){
+const renderStoreCategories = async function(){
   console.log('render all categories');
-  requestApi().then(data => data.forEach((categoryReference) =>{
+  let categories = await requestApi();
+  categories.forEach((categoryReference) =>{
     panel.insertAdjacentHTML('afterbegin',
       `<div style="background-color:#faa;" id="category-link" value="${categoryReference.id}">` +
       `<p>${categoryReference.name}</p>` +
       `<p>Listed Items: ${categoryReference.article_count}</p>` +
       '</div>');
-    });
-  );
+  });
+  listenCategorySelect();
 }
 
 const listenCategorySelect = function(){
@@ -67,9 +68,9 @@ const listenCategorySelect = function(){
   });
 }
 
-const renderCategoryItems = function(){
+const renderCategoryItems = async function(){
   console.log('render category items');
-  let categoryItems = requestApi();
+  let categoryItems = await requestApi();
   categoryItems.forEach((itemReference) =>{
     panel.insertAdjacentHTML('afterbegin',
       `<div style="background-color:#faa;" id="item-link" value="${itemReference.id}">` +
@@ -77,6 +78,7 @@ const renderCategoryItems = function(){
       `<p>${itemReference.price_formatted}</p>` +
       '</div>');
   });
+  listenItemSelect();
 }
 
 const listenItemSelect = function(){
@@ -97,8 +99,8 @@ const clearHtml = function(){
   message.innerHTML = '';
 }
 
-const renderItem = function(){
-  let data = requestApi();
+const renderItem = async function(){
+  let data = await requestApi();
   let price = data.price_formatted;
   let sizes = data.sizes;
   let sizeHash = {};
@@ -167,7 +169,6 @@ const initialPageContent = function(){
   if (isEmpty(params)) {
     console.log('no params given, rendering all categories');
     renderStoreCategories();
-    listenCategorySelect();
   } else if (params.hasOwnProperty('category') && params.hasOwnProperty('stock')){
     console.log('category and stock given, rendering item');
     renderItem();

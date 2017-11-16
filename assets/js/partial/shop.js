@@ -170,7 +170,7 @@ const listenAddCart = function(){
     let size = document.querySelector('input[id="size-option"]:checked').value;
     let qty = parseInt(document.getElementById('item-qty').value);
     let stock = params.stock;
-    await requestApi(size, qty, stock).then(() => {console.log('request went through')});//window.location.replace('/ABOA/cart')});
+    await requestApi(size, qty, stock).then(() => {window.location.replace('/ABOA/cart')});
   });
 }
 

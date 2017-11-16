@@ -158,13 +158,13 @@ const listenSizeSelect = function(sizeHash){
   })
 }
 
-const listenAddCart = function(){
+const listenAddCart = async function(){
   document.getElementById('item-form').addEventListener('submit', function(event){
     event.preventDefault();
     let size = document.querySelector('input[id="size-option"]:checked').value;
     let qty = parseInt(document.getElementById('item-qty').value);
     let stock = params.stock;
-    requestApi(size, qty, stock);
+    requestApi(size, qty, stock).then(() => {window.location.replace('/cart')});
   });
 }
 

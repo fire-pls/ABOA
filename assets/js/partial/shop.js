@@ -163,8 +163,8 @@ const listenSizeSelect = function(sizeHash){
   })
 }
 
-const listenAddCart = async function(){
-  document.getElementById('item-form').addEventListener('submit', function(event){
+const listenAddCart = function(){
+  document.getElementById('item-form').addEventListener('submit', async function(event){
     event.preventDefault();
     let size = document.querySelector('input[id="size-option"]:checked').value;
     let qty = parseInt(document.getElementById('item-qty').value);

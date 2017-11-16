@@ -1,4 +1,4 @@
-const requestApi = async function(size = undefined, qty = undefined, idStock = undefined){
+const requestApi = function(size = undefined, qty = undefined, idStock = undefined){
   // if size and qty and stock id provided, change to PATCH request
   console.log('begin api request');
   let body = undefined;
@@ -45,13 +45,14 @@ const requestApi = async function(size = undefined, qty = undefined, idStock = u
 const renderStoreCategories = function(){
   console.log('render all categories');
   let allCategories = requestApi();
-  allCategories.forEach((categoryReference) =>{
+  requestApi.then(data => data.forEach((categoryReference) =>{
     panel.insertAdjacentHTML('afterbegin',
       `<div style="background-color:#faa;" id="category-link" value="${categoryReference.id}">` +
       `<p>${categoryReference.name}</p>` +
       `<p>Listed Items: ${categoryReference.article_count}</p>` +
       '</div>');
-  });
+    });
+  );
 }
 
 const listenCategorySelect = function(){

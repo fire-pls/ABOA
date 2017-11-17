@@ -97,11 +97,6 @@ const listenItemSelect = function(){
   });
 }
 
-const clearHtml = function(){
-  panel.innerHTML = '';
-  message.innerHTML = '';
-}
-
 const renderItem = async function(){
   let data = await requestApi();
   let price = data.price_formatted;

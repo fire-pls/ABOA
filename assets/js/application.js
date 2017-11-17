@@ -93,6 +93,11 @@ const retrieveCart = function(){
   }
 }
 
+const clearHtml = function(){
+  panel.innerHTML = '';
+  message.innerHTML = '';
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   if (currentPath !== 'cart'){
     retrieveCart();

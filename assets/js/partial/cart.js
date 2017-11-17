@@ -1,4 +1,3 @@
-
 const skeleton = document.getElementById('cart-items');
 
 const renderCartItems = function(){
@@ -11,7 +10,8 @@ const renderCartItems = function(){
       '</cartitem>' +
       '<hr>' );
   });
-  skeleton.insertAdjacentHTML('beforeend', '<input id="update-cart" type="button" disabled value="Update Cart">')
+  skeleton.insertAdjacentHTML('beforeend', '<input id="update-cart" type="button" disabled value="Update Cart">');
+  message.insertAdjacentHTML('beforeend', '<input id="checkout-cart" type="button" disabled value="Checkout">');
 }
 
 const updateFormAction = function(newAction){
@@ -74,6 +74,91 @@ const removeFromCartIfNeeded = function(){
   }
 }
 
+const renderOrderDetails = async function(){
+  clearHtml();
+  panel.innerHTML =
+    '<form action="#" id="order-input">' +
+    '<input type="text" id="address">' +
+    '<input type="text" id="city">' +
+    '<input type="text" id="zip-code">' +
+    '<select id="country">' +
+    '<option value="US">US</option>' +
+    '<option value="JP">JP</option>' +
+    '</select>' +
+    '<input type="submit" value="Confirm Address">' +
+    '</form>';
+  message.innerHTML = '<p>You will submit payment on the next screen.</p>';
+  document.getElementById('order-input').addEventListener('submit', funtion(event){
+    event.preventDefault();
+    let address = document.getElementById('address').value;
+    let zipCode = document.getElementById('zip-code').value;
+    let city = document.getElementById('city').value;
+    let country = document.getElementById('country').value;
+    console.log('requesting api right now');
+    let apiOrder = await apiCheckout();
+    console.log('api requested. will now render checkout form');
+    renderCheckoutForm(apiOrder);
+  });
+}
+const apiCheckout() = function(addr, zipc, city, country){
+  // promise syntax
+  //return new Promise(resolve =>{});
+  return new Promise(resolve =>{
+    let url = 'https://aboa-v1.herokuapp.com/api/v1/cart/checkout';
+    // permit(:city, :address, :zip_code, :country)
+    let body = JSON.stringify({order:{city: city, address: addr, country: country, zip_code: zipc}});
+    let heads = new Headers();
+    heads.append('X-User-Email', `${currentUser.email}`);
+    heads.append('X-User-Token', `${currentUser.token}`);
+    heads.append('Content-Type', 'application/json');
+    let reqParams = { method: 'PATCH', headers: heads, body: body };
+    let fullRequest = new Request(url, reqParams)
+    console.log('commencing actual fetch NOW!!!');
+    fetch(fullRequest).then(response => response.json()).then(data => {
+      console.log('retrieved.');
+      resolve(data);
+    }
+  });
+}
+
+const listenCartCheckout = function(){
+  if (currentCart !== undefined){
+    checkoutButton = document.getElementById('checkout-cart');
+    checkoutButton.removeAttribute('disabled');
+    checkoutButton.addEventListener('click', function(event){
+      renderOrderDetails();
+    })
+  }
+}
+
+const renderCheckoutForm = function(orderInstance){
+  console.log('now inside renderCheckoutForm function');
+  let newOrder = orderInstance;
+  clearHtml();
+  if (newOrder.hasOwnProperty('errors')) {
+    console.log('cart checkout error');
+    panel.innerHTML = `<p style="color:#e44">${newOrder.errors}</p>`;
+  } else {
+    console.log('order successfully created, needs payment');
+    panel.innerHTML =
+      '<h1>Checkout with stripe</h1>' +
+      '<br>' +
+      '<article>' +
+      '<label class="amount">' +
+      '<span>Amount: <%= humanized_money_with_symbol(@order.amount) %></span>' +
+      '</label>' +
+      '</article>' +
+      '<script src="https://checkout.stripe.com/checkout.js" class="stripe-button" ' +
+        'data-key="pk_test_gjdIyOS55rSzSzGo4C0OgsVl" ' +
+        'data-name="ABOA test cart" ' +
+        `data-email="${currentUser.email}" ` +
+        `data-description="${newOrder.id}" ` +
+        `data-amount="${newOrder.amount_cents}" ` +
+        'data-currency="${newOrder.amount.currency}"> ' +
+      '</script>';
+  }
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
   if (currentUser){
@@ -83,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderDynamicLinks();
     renderCartItems();
     listenCartSelect();
+    listenCartCheckout();
   } else {
     // console.log('you not signed in');
     renderDynamicLinks();

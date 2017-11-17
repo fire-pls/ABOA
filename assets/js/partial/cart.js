@@ -100,7 +100,7 @@ const renderOrderDetails = async function(){
     renderCheckoutForm(apiOrder);
   });
 }
-const apiCheckout() = function(addr, zipc, city, country){
+const apiCheckout = function(addr, zipc, city, country){
   // promise syntax
   //return new Promise(resolve =>{});
   return new Promise(resolve =>{

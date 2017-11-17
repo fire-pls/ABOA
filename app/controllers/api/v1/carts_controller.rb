@@ -40,7 +40,7 @@ class Api::V1::CartsController < Api::V1::BaseController
       render_error
     else
       #redirect_to new_api_v1_payment_path(ord)
-      redirect_to new_api_v1_order_payment_path(ord)
+      redirect_to new_api_v1_order_payment_path(ord, current_user: current_user) and return
     end
   end
 

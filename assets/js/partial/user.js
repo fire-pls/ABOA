@@ -33,7 +33,7 @@ const renderUserPanel = async function(){
 }
 
 const retrieveOrders = function(){
-  return getApi({directory:"orders"});
+  return getApi(directory = "orders");
 }
 
 const listenSignOut = function(){

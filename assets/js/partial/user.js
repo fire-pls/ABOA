@@ -9,13 +9,17 @@ const renderUserPanel = async function(){
     let orders = await retrieveOrders();
     orders.forEach((orderItem)=>{
       let itemId = orderItem.id;
+      let shippingCompany = "";
+      if (orderItem.shipped === "true") {
+        shippingCompany = ` ${orderItem.shipping_company}`;
+      }
       panel.insertAdjacentHTML('beforeend',
         '<div>' +
         `<p>Order number ${itemId}</p>` +
         `<div id="items-${itemId}"></div>` +
         `<p>Shipping to: ${orderItem.full_address}</p>` +
         `<p>Paid: ${orderItem.paid}</p>` +
-        `<p>Shipped: ${orderItem.shipped}${if(orderItem.shipped){orderItem.shipping_company}}</p>` +
+        `<p>Shipped: ${orderItem.shipped + shippingCompany}</p>` +
         `<p>Delivered: ${orderItem.delivered}</p>` +
         '</div>');
       let itemSpace = document.getElementById(`items-${itemId}`);

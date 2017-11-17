@@ -64,6 +64,7 @@ const renderDynamicLinks = function(){
     '<a class="page-link" href="/ABOA/shop">categories</a>';
   if (currentUser) {
     // console.log('signed in links');
+    retrieveCart();
     let cartSize = currentCart.items.length || 0;
     ajaxLinks.insertAdjacentHTML('beforeend',
       '<a class="page-link" href="/ABOA/user">profile</a>' +

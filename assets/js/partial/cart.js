@@ -117,7 +117,7 @@ const apiCheckout = function(addr, zipc, city, country){
     fetch(fullRequest).then(response => response.json()).then(data => {
       console.log('retrieved.');
       resolve(data);
-    }
+    });
   });
 }
 

@@ -99,7 +99,7 @@ const getApi = function(method = "GET",
   body = undefined,
   email = `${currentUser.email}`,
   token = `${currentUser.token}`,
-  baseUrl = "https://aboa-v1.herokuapp.com/api/v1/"}){
+  baseUrl = "https://aboa-v1.herokuapp.com/api/v1/"){
   // if no cart already
   return new Promise(resolve =>{
     let heads = new Headers();

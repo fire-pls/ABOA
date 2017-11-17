@@ -29,7 +29,6 @@ class Api::V1::PaymentsController < Api::V1::BaseController
   private
 
   def set_payment
-    binding.pry
     current_user = User.find(params[:current_user]) if params[:current_user]
     @order = Order.where(paid: false).find(params[:order_id])
     unless OrderPolicy.new(current_user, @order).show?

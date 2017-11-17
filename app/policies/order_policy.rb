@@ -14,7 +14,6 @@ class OrderPolicy < ApplicationPolicy
   end
 
   def new?
-    binding.pry
     !user.nil?
   end
 

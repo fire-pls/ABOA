@@ -140,18 +140,20 @@ const listenCartCheckout = function(){
 const renderCheckoutForm = function(orderInstance){
   console.log('now inside renderCheckoutForm function');
   let newOrder = orderInstance;
+  console.log(newOrder);
   clearHtml();
   if (newOrder.hasOwnProperty('errors')) {
     console.log('cart checkout error');
     panel.innerHTML = `<p style="color:#e44">${newOrder.errors}</p>`;
   } else {
+    Cookies.set('unpaidOrders', newOrder)
     console.log('order successfully created, needs payment');
     panel.innerHTML =
       '<h1>Checkout with stripe</h1>' +
       '<br>' +
       '<article>' +
       '<label class="amount">' +
-      '<span>Amount: <%= humanized_money_with_symbol(@order.amount) %></span>' +
+      `<span>Amount: ${newOrder.amount_cents} </span>` +
       '</label>' +
       '</article>' +
       '<script src="https://checkout.stripe.com/checkout.js" class="stripe-button" ' +
@@ -160,7 +162,7 @@ const renderCheckoutForm = function(orderInstance){
         `data-email="${currentUser.email}" ` +
         `data-description="${newOrder.id}" ` +
         `data-amount="${newOrder.amount_cents}" ` +
-        'data-currency="${newOrder.amount.currency}"> ' +
+        `data-currency="${newOrder.amount.currency}"> ` +
       '</script>';
   }
 }

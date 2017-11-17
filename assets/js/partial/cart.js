@@ -142,7 +142,7 @@ const renderCheckoutForm = function(orderInstance){
   let newOrder = orderInstance;
   console.log(newOrder);
   clearHtml();
-  if (newOrder.hasOwnProperty('errors')) {
+  if (newOrder.hasOwnProperty('error')) {
     console.log('cart checkout error');
     panel.innerHTML = `<p style="color:#e44">${newOrder.errors}</p>`;
   } else {

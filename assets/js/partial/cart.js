@@ -168,7 +168,7 @@ const renderCheckoutForm = function(orderInstance){
       '<div id="stripe-spot"></div>' +
       '</form>';
     let desc = `${newOrder.id}`;
-    let amount = `${newOrder.id}`;
+    let amount = `${newOrder.amount_cents}`;
     let currency = `${newOrder.amount.currency.name}`;
     let src = createStripeScript(desc, amount, currency);
     document.getElementById('stripe-spot').appendChild(src);

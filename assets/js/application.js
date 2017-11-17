@@ -117,7 +117,7 @@ const getApi = function(method = "GET",
       reqParams.body = params.body;
     }
     console.log(reqParams);
-    let fullRequest = new Request(`${params.baseUrl}${params.directory}`, reqParams);
+    let fullRequest = new Request(`${baseUrl}${directory}`, reqParams);
     console.log(fullRequest);
     fetch(fullRequest).then(response => response.json()).then(data => {
       console.log(data);

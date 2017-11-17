@@ -35,6 +35,7 @@ const renderUserPanel = async function(){
 const retrieveOrders = function(){
   return new Promise(resolve =>{
     let apiOrders = getApi({directory:"orders"});
+    resolve(apiOrders);
   });
 }
 

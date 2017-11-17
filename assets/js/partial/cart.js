@@ -113,6 +113,8 @@ const apiCheckout = function(addr, zipc, city, country){
     heads.append('Content-Type', 'application/json');
     let reqParams = { method: 'PATCH' };
     reqParams.headers = heads;
+    console.log("here's the body of the request");
+    console.log(body);
     reqParams.body = body;
     let fullRequest = new Request(url, reqParams)
     console.log('here is the request ur bouta send');

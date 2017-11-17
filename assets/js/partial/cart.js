@@ -162,7 +162,7 @@ const renderCheckoutForm = function(orderInstance){
       '<br>' +
       '<article>' +
       '<label class="amount">' +
-      `<span>Amount: ${newOrder.currency.symbol}${newOrder.amount_cents}</span>` +
+      `<span>Amount: ${newOrder.amount.currency.symbol}${newOrder.amount_cents}</span>` +
       '</label>' +
       '</article>' +
       '<div id="stripe-spot"></div>' +

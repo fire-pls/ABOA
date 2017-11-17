@@ -13,12 +13,16 @@ class OrderPolicy < ApplicationPolicy
     true
   end
 
+  def new?
+    !user.nil?
+  end
+
   def create?
     record.user == user
   end
 
   def index?
-    user.exists?
+    !user.nil?
   end
 
   def show?

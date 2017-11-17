@@ -22,6 +22,10 @@ class Item < ApplicationRecord
     return list_of_available.count
   end
 
+  def price_formatted
+    Monetize.parse(self.price).format
+  end
+
   def list_of_available
     return Item.where(stock:self.stock,size:self.size,order_id:nil)
   end

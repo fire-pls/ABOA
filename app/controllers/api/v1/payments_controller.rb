@@ -29,8 +29,11 @@ class Api::V1::PaymentsController < Api::V1::BaseController
   private
 
   def set_payment
+    current_user = User.find(params[:current_user]) if params[:current_user]
     @order = Order.where(paid: false).find(params[:order_id])
-    authorize @order # For Pundit
+    unless OrderPolicy.new(current_user, @order).show?
+      raise Pundit::NotAuthorizedError, "not allowed to see this #{@order.inspect}"
+    end
   end
 
   def render_error

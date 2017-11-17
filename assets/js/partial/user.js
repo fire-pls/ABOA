@@ -6,7 +6,7 @@ const renderUserPanel = async function(){
       '<br><a href="/ABOA/user?show=orders">View your orders</a>' +
       '<div id="cart-items"></div>';
   } else if (params.show === "orders"){
-    let orders = await getApi({directory:"orders"});
+    let orders = await retrieveOrders();
     orders.forEach((orderItem)=>{
       let itemId = orderItem.id;
       let shippingCompany = "";
@@ -33,10 +33,7 @@ const renderUserPanel = async function(){
 }
 
 const retrieveOrders = function(){
-  return new Promise(resolve =>{
-    let apiOrders = getApi({directory:"orders"});
-    resolve(apiOrders);
-  });
+  return getApi({directory:"orders"});
 }
 
 const listenSignOut = function(){

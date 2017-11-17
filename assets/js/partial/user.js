@@ -6,6 +6,12 @@ const renderUserPanel = async function(){
       '<br><a href="/ABOA/user?show=orders">View your orders</a>' +
       '<div id="cart-items"></div>';
   } else if (params.show === "orders"){
+    panel.innerHTML =
+      '<style>' +
+      'p {margin-bottom:2px;}' +
+      'div {margin-bottom:2px;}' +
+      'hr {margin:28px 0px 14px 0px;}' +
+      '</style>';
     let orders = await retrieveOrders();
     orders.forEach((orderItem)=>{
       let itemId = orderItem.id;
@@ -16,11 +22,12 @@ const renderUserPanel = async function(){
       panel.insertAdjacentHTML('beforeend',
         '<div>' +
         `<p>Order number ${itemId}</p>` +
-        `<div id="items-${itemId}"></div>` +
+        `<div style="background-color:#faa;max-width:300px;" id="items-${itemId}"></div>` +
         `<p>Shipping to: ${orderItem.full_address}</p>` +
-        `<p>Paid: ${orderItem.paid}</p>` +
-        `<p>Shipped: ${orderItem.shipped + shippingCompany}</p>` +
-        `<p>Delivered: ${orderItem.delivered}</p>` +
+        `<p>Paid: ${orderItem.paid} ` +
+        `Shipped: ${orderItem.shipped + shippingCompany} ` +
+        `Delivered: ${orderItem.delivered}</p>` +
+        `<button type="button" value="${itemId}">Pay for this order</button>` +
         '</div>');
       let itemSpace = document.getElementById(`items-${itemId}`);
       orderItem.items.forEach((itemObject)=>{

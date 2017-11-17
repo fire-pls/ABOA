@@ -101,6 +101,12 @@ const getApi = function(method = "GET",
   token = `${currentUser.token}`,
   baseUrl = "https://aboa-v1.herokuapp.com/api/v1/"){
   // if no cart already
+  console.log(method);
+  console.log(directory);
+  console.log(body);
+  console.log(email);
+  console.log(token);
+  console.log(baseUrl);
   return new Promise(resolve =>{
     let heads = new Headers();
     heads.append('Content-Type', 'application/json')
@@ -110,8 +116,11 @@ const getApi = function(method = "GET",
     if (params.body){
       reqParams.body = params.body;
     }
+    console.log(reqParams);
     let fullRequest = new Request(`${params.baseUrl}${params.directory}`, reqParams);
+    console.log(fullRequest);
     fetch(fullRequest).then(response => response.json()).then(data => {
+      console.log(data);
       resolve(data);
     });
   });

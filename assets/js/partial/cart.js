@@ -111,7 +111,7 @@ const apiCheckout = function(addr, zipc, city, country){
     heads.append('X-User-Email', `${currentUser.email}`);
     heads.append('X-User-Token', `${currentUser.token}`);
     heads.append('Content-Type', 'application/json');
-    let reqParams = { method: 'PATCH' };
+    let reqParams = { method: 'POST' };
     reqParams.headers = heads;
     console.log("here's the body of the request");
     console.log(body);

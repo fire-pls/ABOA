@@ -88,7 +88,7 @@ const renderOrderDetails = async function(){
     '<input type="submit" value="Confirm Address">' +
     '</form>';
   message.innerHTML = '<p>You will submit payment on the next screen.</p>';
-  document.getElementById('order-input').addEventListener('submit', funtion(event){
+  document.getElementById('order-input').addEventListener('submit', function(event){
     event.preventDefault();
     let address = document.getElementById('address').value;
     let zipCode = document.getElementById('zip-code').value;

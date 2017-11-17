@@ -78,9 +78,9 @@ const renderOrderDetails = async function(){
   clearHtml();
   panel.innerHTML =
     '<form action="#" id="order-input">' +
-    '<input type="text" id="address">' +
-    '<input type="text" id="city">' +
-    '<input type="text" id="zip-code">' +
+    '<input type="text" id="address" placeholder="Address">' +
+    '<input type="text" id="city" placeholder="City">' +
+    '<input type="text" id="zip-code" placeholder="Zip Code">' +
     '<select id="country">' +
     '<option value="US">US</option>' +
     '<option value="JP">JP</option>' +
@@ -95,7 +95,7 @@ const renderOrderDetails = async function(){
     let city = document.getElementById('city').value;
     let country = document.getElementById('country').value;
     console.log('requesting api right now');
-    let apiOrder = await apiCheckout();
+    let apiOrder = await apiCheckout(address, zipCode, city, country);
     console.log('api requested. will now render checkout form');
     renderCheckoutForm(apiOrder);
   });
@@ -111,8 +111,12 @@ const apiCheckout = function(addr, zipc, city, country){
     heads.append('X-User-Email', `${currentUser.email}`);
     heads.append('X-User-Token', `${currentUser.token}`);
     heads.append('Content-Type', 'application/json');
-    let reqParams = { method: 'PATCH', headers: heads, body: body };
+    let reqParams = { method: 'PATCH' };
+    reqParams.headers = heads;
+    reqParams.body = body;
     let fullRequest = new Request(url, reqParams)
+    console.log('here is the request ur bouta send');
+    console.log(fullRequest);
     console.log('commencing actual fetch NOW!!!');
     fetch(fullRequest).then(response => response.json()).then(data => {
       console.log('retrieved.');

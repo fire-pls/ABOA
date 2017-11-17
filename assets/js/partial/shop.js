@@ -34,8 +34,8 @@ const requestApi = function(size = undefined, qty = undefined, idStock = undefin
     fetch(fullRequest).then(response => response.json()).then(data => {
       if (method === 'PATCH') {
         Cookies.set('cart', data);
-        currentCart = jsonCookie(Cookies.get('cart'));
-        resolve(console.log('you patched the cart'));
+        currentCart = data;
+        resolve(data);
       } else {
         console.log('you query stock');
         console.log(data);

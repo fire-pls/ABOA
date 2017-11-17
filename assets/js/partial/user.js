@@ -3,10 +3,10 @@ const renderUserPanel = async function(){
   if (params.show === undefined){
     panel.innerHTML =
       '<a href="/ABOA/cart">View your cart</a>' +
-      '<a href="/ABOA/user?show=orders">View your orders</a>' +
+      '<br><a href="/ABOA/user?show=orders">View your orders</a>' +
       '<div id="cart-items"></div>';
   } else if (params.show === "orders"){
-    let orders = await retrieveOrders();
+    let orders = await getApi({directory:"orders"});
     orders.forEach((orderItem)=>{
       let itemId = orderItem.id;
       let shippingCompany = "";

@@ -34,6 +34,9 @@ const renderUserPanel = async function(){
       orderItem.items.forEach((itemObject)=>{
         itemSpace.insertAdjacentHTML('beforeend', `<p>${itemObject.size + ' ' + itemObject.name}</p>`);
       });
+      let dividers = panel.getElementsByTagName('hr');
+      let count = dividers.length;
+      dividers[count-1].remove();
     });
   } else {
     panel.innerHTML = '<p>Your cart will be here</p>';

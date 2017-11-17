@@ -110,8 +110,8 @@ const getApi = function(method = "GET",
   return new Promise(resolve =>{
     let heads = new Headers();
     heads.append('Content-Type', 'application/json')
-    heads.append('X-User-Email', `${params.email}`);
-    heads.append('X-User-Token', `${params.token}`);
+    heads.append('X-User-Email', `${email}`);
+    heads.append('X-User-Token', `${token}`);
     let reqParams = { headers: heads, method: params.method };
     if (params.body){
       reqParams.body = params.body;

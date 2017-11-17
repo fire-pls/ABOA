@@ -28,7 +28,8 @@ const renderUserPanel = async function(){
         `Shipped: ${orderItem.shipped + shippingCompany} ` +
         `Delivered: ${orderItem.delivered}</p>` +
         `<button type="button" value="${itemId}">Pay for this order</button>` +
-        '</div>');
+        '</div>' +
+        '<hr>');
       let itemSpace = document.getElementById(`items-${itemId}`);
       orderItem.items.forEach((itemObject)=>{
         itemSpace.insertAdjacentHTML('beforeend', `<p>${itemObject.size + ' ' + itemObject.name}</p>`);

@@ -1,10 +1,10 @@
 const renderUserPanel = async function(){
+  message.innerHTML = '<hr><a href="/ABOA/" id="signout">Log Out</a>';
   if (params.show === undefined){
     panel.innerHTML =
       '<a href="/ABOA/cart">View your cart</a>' +
       '<a href="/ABOA/user?show=orders">View your orders</a>' +
       '<div id="cart-items"></div>';
-    message.innerHTML = '<hr><a href="/ABOA/" id="signout">Log Out</a>';
   } else if (params.show === "orders"){
     let orders = await retrieveOrders();
     orders.forEach((orderItem)=>{

@@ -142,14 +142,18 @@ const renderCheckoutForm = function(orderInstance){
   let newOrder = orderInstance;
   console.log(newOrder);
   clearHtml();
-  if (newOrder.hasOwnProperty('error')) {
+  if (newOrder.hasOwnProperty('error') || newOrder.hasOwnProperty('errors')) {
     console.log('cart checkout error');
     panel.innerHTML = `<p style="color:#e44">${newOrder.errors}</p>`;
   } else {
     if (Cookies.get('unpaidOrders') === undefined){
       Cookies.set('unpaidOrders', [newOrder]);
     } else {
-      Cookies.get('unpaidOrders').push(newOrder);
+      let string = Cookies.get('unpaidOrders');
+      let arr = jsonCookie(string);
+      arr.push(newOrder);
+      string = JSON.stringify(arr);
+      Cookies.set('unpaidOrders', string);
     }
     console.log('order successfully created, needs payment');
     panel.innerHTML =
@@ -158,7 +162,7 @@ const renderCheckoutForm = function(orderInstance){
       '<br>' +
       '<article>' +
       '<label class="amount">' +
-      `<span>Amount: ${newOrder.amount_cents} </span>` +
+      `<span>Amount: ${newOrder.currency.symbol}${newOrder.amount_cents}</span>` +
       '</label>' +
       '</article>' +
       '<div id="stripe-spot"></div>' +
@@ -168,6 +172,7 @@ const renderCheckoutForm = function(orderInstance){
     let currency = `${newOrder.amount.currency.name}`;
     let src = createStripeScript(desc, amount, currency);
     document.getElementById('stripe-spot').appendChild(src);
+    retrieveCart();
     /*panel.insertAdjacentHTML
       '<script src="https://checkout.stripe.com/checkout.js" class="stripe-button" ' +
         'data-key="pk_test_gjdIyOS55rSzSzGo4C0OgsVl" ' +

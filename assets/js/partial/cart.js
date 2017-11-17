@@ -146,16 +146,29 @@ const renderCheckoutForm = function(orderInstance){
     console.log('cart checkout error');
     panel.innerHTML = `<p style="color:#e44">${newOrder.errors}</p>`;
   } else {
-    Cookies.set('unpaidOrders', newOrder)
+    if (Cookies.get('unpaidOrders') === undefined){
+      Cookies.set('unpaidOrders', [newOrder]);
+    } else {
+      Cookies.get('unpaidOrders').push(newOrder);
+    }
     console.log('order successfully created, needs payment');
     panel.innerHTML =
       '<h1>Checkout with stripe</h1>' +
+      '<form action="#">' +
       '<br>' +
       '<article>' +
       '<label class="amount">' +
       `<span>Amount: ${newOrder.amount_cents} </span>` +
       '</label>' +
       '</article>' +
+      '<div id="stripe-spot"></div>' +
+      '</form>';
+    let desc = `${newOrder.id}`;
+    let amount = `${newOrder.id}`;
+    let currency = `${newOrder.amount.currency}`;
+    let src = createStripeScript(desc, amount, currency);
+    document.getElementById('stripe-spot').appendChild(src);
+    /*panel.insertAdjacentHTML
       '<script src="https://checkout.stripe.com/checkout.js" class="stripe-button" ' +
         'data-key="pk_test_gjdIyOS55rSzSzGo4C0OgsVl" ' +
         'data-name="ABOA test cart" ' +
@@ -163,8 +176,20 @@ const renderCheckoutForm = function(orderInstance){
         `data-description="${newOrder.id}" ` +
         `data-amount="${newOrder.amount_cents}" ` +
         `data-currency="${newOrder.amount.currency}"> ` +
-      '</script>';
+      '</script>';*/
   }
+}
+const createStripeScript = function(desc, amt, curr) {
+  let script = document.createElement('script');
+  script.src = "https://checkout.stripe.com/checkout.js";
+  script.setAttribute('data-key', "pk_test_gjdIyOS55rSzSzGo4C0OgsVl");
+  script.setAttribute('class', "stripe-button");
+  script.setAttribute('data-name', "ABOA cart");
+  script.setAttribute('data-description', `${desc}`);
+  script.setAttribute('data-currency', `${curr}`);
+  script.setAttribute('data-amount', `${amt}`);
+  script.setAttribute('data-email', `${currentUser.email}`);
+  return script;
 }
 
 

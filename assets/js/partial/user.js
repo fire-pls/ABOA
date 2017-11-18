@@ -46,7 +46,7 @@ const renderUserPanel = async function(){
 }
 
 const listenClickOrder = function (){
-  let buttons = panel.getElementsByTagName('button');
+  let buttons = panel.querySelectorAll('button');
   buttons.forEach((buttonElement)=>{
     buttonElement.addEventListener('click', function(event){
       let value = parseInt(buttonElement.value);

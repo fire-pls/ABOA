@@ -132,6 +132,45 @@ const clearHtml = function(){
   message.innerHTML = '';
 }
 
+const renderCheckoutForm = function(orderInstance){
+  console.log('now inside renderCheckoutForm function');
+  let newOrder = orderInstance;
+  console.log(newOrder);
+  clearHtml();
+  if (newOrder.hasOwnProperty('error') || newOrder.hasOwnProperty('errors')) {
+    console.log('cart checkout error');
+    panel.innerHTML = `<p style="color:#e44">${newOrder.errors}</p>`;
+  } else {
+    if (Cookies.get('unpaidOrders') === undefined){
+      Cookies.set('unpaidOrders', [newOrder]);
+    } else {
+      let string = Cookies.get('unpaidOrders');
+      let arr = jsonCookie(string);
+      arr.push(newOrder);
+      string = JSON.stringify(arr);
+      Cookies.set('unpaidOrders', string);
+    }
+    console.log('order successfully created, needs payment');
+    panel.innerHTML =
+      '<h1>Checkout with stripe</h1>' +
+      '<form action="#">' +
+      '<br>' +
+      '<article>' +
+      '<label class="amount">' +
+      `<span>Amount: ${newOrder.amount.currency.symbol}${newOrder.amount_cents}</span>` +
+      '</label>' +
+      '</article>' +
+      '<div id="stripe-spot"></div>' +
+      '</form>';
+    let desc = `${newOrder.id}`;
+    let amount = `${newOrder.amount_cents}`;
+    let currency = `${newOrder.amount.currency.id}`;
+    let src = createStripeScript(desc, amount, currency);
+    document.getElementById('stripe-spot').appendChild(src);
+    retrieveCart();
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   if (currentPath !== 'cart'){
     retrieveCart();

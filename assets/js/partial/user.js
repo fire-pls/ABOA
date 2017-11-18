@@ -7,12 +7,14 @@ const renderUserPanel = async function(){
       '<div id="cart-items"></div>';
   } else if (params.show === "orders"){
     panel.innerHTML =
+      '<div id="loader"></div>' +
       '<style>' +
       'p {margin-bottom:2px;}' +
       'div {margin-bottom:2px;}' +
       'hr {margin:28px 0px 14px 0px;}' +
       '</style>';
     let orders = await retrieveOrders();
+    panel.getElementById('loader').remove();
     orders.forEach((orderItem)=>{
       let itemId = orderItem.id;
       let shippingCompany = "";
@@ -34,12 +36,30 @@ const renderUserPanel = async function(){
       orderItem.items.forEach((itemObject)=>{
         itemSpace.insertAdjacentHTML('beforeend', `<p>${itemObject.size + ' ' + itemObject.name}</p>`);
       });
-      let dividers = panel.getElementsByTagName('hr');
-      let count = dividers.length;
-      dividers[count-1].remove();
     });
+    removeLastPanelHr();
+    let chosenOrder = await listenClickOrder();
+    renderCheckoutForm(chosenOrder);
   } else {
     panel.innerHTML = '<p>Your cart will be here</p>';
+  }
+}
+
+const listenClickOrder = function (){
+  let buttons = panel.getElementsByTagName('button');
+  buttons.forEach((buttonElement)=>{
+    buttonElement.addEventListener('click', function(event){
+      let value = parseInt(buttonElement.value);
+      panel.innerHTML = '<div id="loader"></div>;';
+      return getApi('GET', `orders/${value}`);
+    });
+  });
+}
+
+const removeLastPanelHr = function (){
+    let dividers = panel.getElementsByTagName('hr');
+    let count = dividers.length;
+    dividers[count-1].remove();
   }
 }
 

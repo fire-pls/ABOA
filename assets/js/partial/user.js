@@ -57,10 +57,9 @@ const listenClickOrder = function (){
 }
 
 const removeLastPanelHr = function (){
-    let dividers = panel.getElementsByTagName('hr');
-    let count = dividers.length;
-    dividers[count-1].remove();
-  }
+  let dividers = panel.getElementsByTagName('hr');
+  let count = dividers.length;
+  dividers[count-1].remove();
 }
 
 const retrieveOrders = function(){

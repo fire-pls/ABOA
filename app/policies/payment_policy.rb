@@ -6,6 +6,7 @@ class PaymentPolicy < ApplicationPolicy
   end
 
   def create?
-    #true
+    binding.pry
+    user
   end
 end

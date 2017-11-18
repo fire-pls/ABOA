@@ -9,11 +9,16 @@ class User < ApplicationRecord
   has_many :reservations, through: :cart
   has_many :items, through: :orders
   after_create :create_cart
+  before_save :confirm_admin
 
   #before_save :geocode
 
   private
   def create_cart
     self.cart = Cart.new
+  end
+
+  def confirm_admin
+    self.admin = ENV['ADMIN_EMAIL'] == self.email
   end
 end

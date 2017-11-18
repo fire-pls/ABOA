@@ -104,7 +104,7 @@ const apiCheckout = function(addr, zipc, city, country){
   // promise syntax
   //return new Promise(resolve =>{});
   return new Promise(resolve =>{
-    let url = 'https://aboa-v1.herokuapp.com/api/v1/cart/checkout';
+    let url = apiUrl;
     // permit(:city, :address, :zip_code, :country)
     let body = JSON.stringify({order:{city: city, address: addr, country: country, zip_code: zipc}});
     let heads = new Headers();

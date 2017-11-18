@@ -14,7 +14,7 @@ const renderUserPanel = async function(){
       'hr {margin:28px 0px 14px 0px;}' +
       '</style>';
     let orders = await retrieveOrders();
-    panel.getElementById('loader').remove();
+    panel.querySelector('#loader').remove();
     orders.forEach((orderItem)=>{
       let itemId = orderItem.id;
       let shippingCompany = "";

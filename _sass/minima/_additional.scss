@@ -72,11 +72,11 @@ hr {
 }
 
 #loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    // border-top: 16px solid #3498db; /* Blue */
+    border: 10px solid rgb(40,40,40); /* Dark grey */
+    border-top: 10px solid #f41a3f; /* Red */
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    width: 40px;
+    height: 40px;
     animation: spin 2s linear infinite;
 }
 

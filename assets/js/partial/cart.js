@@ -104,7 +104,7 @@ const apiCheckout = function(addr, zipc, city, country){
   // promise syntax
   //return new Promise(resolve =>{});
   return new Promise(resolve =>{
-    let url = apiUrl;
+    let url = `${apiUrl}cart/checkout`;
     // permit(:city, :address, :zip_code, :country)
     let body = JSON.stringify({order:{city: city, address: addr, country: country, zip_code: zipc}});
     let heads = new Headers();

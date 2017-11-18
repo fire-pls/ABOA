@@ -1,6 +1,7 @@
 class Api::V1::PaymentsController < Api::V1::BaseController
-  #acts_as_token_authentication_handler_for User
+  acts_as_token_authentication_handler_for User
   before_action :set_payment
+  skip_after_action :verify_authorized, only: [ :create ]
 
   def new
   end
@@ -19,18 +20,24 @@ class Api::V1::PaymentsController < Api::V1::BaseController
     )
 
     @order.update(payment: charge.to_json, paid: true)
-    redirect_to api_v1_order_path(@order)
+    render 'api/v1/orders/show'
 
   rescue Stripe::CardError => e
     flash[:alert] = e.message
-    redirect_to new_order_payment_path(@order)
+    render :new
   end
 
   private
 
   def set_payment
     @order = Order.where(paid: false).find(params[:order_id])
-    params[:current_user] ? current_user = User.find(params[:current_user]) : current_user = @order.user
+    if params[:stripeEmail]
+      current_user = User.find_by(email:params[:stripeEmail])
+    elsif params[:current_user]
+      current_user = User.find(params[:current_user])
+    else
+      current_user = @order.user
+    end
     unless OrderPolicy.new(current_user, @order).show?
       raise Pundit::NotAuthorizedError, "not allowed to see this #{@order.inspect}"
     end

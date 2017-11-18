@@ -6,6 +6,6 @@ class PaymentPolicy < ApplicationPolicy
   end
 
   def create?
-    #true
+    true
   end
 end

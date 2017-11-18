@@ -167,7 +167,7 @@ const renderCheckoutForm = function(orderInstance){
     console.log('order successfully created, needs payment');
     panel.innerHTML =
       '<h1>Checkout with stripe</h1>' +
-      `<form id="stripe-form" action="${apiUrl}orders/${orderInstance.id}/payments" method="POST">` +
+      `<form target="_blank" id="stripe-form" action="${apiUrl}orders/${orderInstance.id}/payments" method="POST">` +
       '<br>' +
       '<article>' +
       '<label class="amount">' +

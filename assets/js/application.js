@@ -132,6 +132,19 @@ const clearHtml = function(){
   message.innerHTML = '';
 }
 
+const createStripeScript = function(desc, amt, curr) {
+  let script = document.createElement('script');
+  script.src = "https://checkout.stripe.com/checkout.js";
+  script.setAttribute('data-key', "pk_test_gjdIyOS55rSzSzGo4C0OgsVl");
+  script.setAttribute('class', "stripe-button");
+  script.setAttribute('data-name', "ABOA cart");
+  script.setAttribute('data-description', `${desc}`);
+  script.setAttribute('data-currency', `${curr}`);
+  script.setAttribute('data-amount', `${amt}`);
+  script.setAttribute('data-email', `${currentUser.email}`);
+  return script;
+}
+
 const renderCheckoutForm = function(orderInstance){
   console.log('now inside renderCheckoutForm function');
   let newOrder = orderInstance;

@@ -38,8 +38,7 @@ const renderUserPanel = async function(){
       });
     });
     removeLastPanelHr();
-    let chosenOrder = await listenClickOrder();
-    renderCheckoutForm(chosenOrder);
+    listenClickOrder();
   } else {
     panel.innerHTML = '<p>Your cart will be here</p>';
   }
@@ -48,10 +47,11 @@ const renderUserPanel = async function(){
 const listenClickOrder = function (){
   let buttons = panel.querySelectorAll('button');
   buttons.forEach((buttonElement)=>{
-    buttonElement.addEventListener('click', function(event){
+    buttonElement.addEventListener('click', async function(event){
       let value = parseInt(buttonElement.value);
       panel.innerHTML = '<div id="loader"></div>;';
-      return getApi('GET', `orders/${value}`);
+      let chosenOrder = await getApi('GET', `orders/${value}`);
+      renderCheckoutForm(chosenOrder);
     });
   });
 }

@@ -2,7 +2,7 @@
 layout: post
 title:  "Major front-end features in place"
 date:   2017-11-17 00:03:30 -0800
-category: front
+category: frontend
 ---
 
 Very excited to release the skeleton for the frontend today. All the major
@@ -39,7 +39,6 @@ TODO:
   <li>Admin addition of items</li>
   <li>Sandbox mode to quickly showcase features</li>
   <li>Debug page for easily adding items</li>
-  <li>Visitor page</li>
   <li>Visitor page</li>
 </ul>
 I also still need a readme, but it's pretty low priority at the moment. If this

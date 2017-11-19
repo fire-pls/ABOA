@@ -21,8 +21,8 @@ const parseQueryString = function(url) {
   );
   return urlParams;
 }
-//const apiUrl = "https://aboa-v1.herokuapp.com/api/v1/";
-const apiUrl = 'http://localhost:3000/api/v1/';
+const apiUrl = "https://aboa-v1.herokuapp.com/api/v1/";
+//const apiUrl = 'http://localhost:3000/api/v1/';
 const params = parseQueryString(location.search);
 let currentUser = jsonCookie(Cookies.get('current_user'));
 let currentCart = jsonCookie(Cookies.get('cart'));

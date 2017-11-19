@@ -31,7 +31,6 @@ class Api::V1::PaymentsController < Api::V1::BaseController
   private
 
   def set_payment
-    binding.pry
     @order = Order.where(paid: false).find(params[:order_id])
     if params[:stripeEmail]
       current_user = User.find_by(email:params[:stripeEmail])

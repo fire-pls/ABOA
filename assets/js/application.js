@@ -84,21 +84,28 @@ const signIn = function(){
 }
 
 const renderDynamicLinks = async function(){
-  // console.log('getting dynamic links');
   ajaxLinks.innerHTML =
     '<a class="page-link" href="/ABOA/shop">categories</a>';
   if (currentUser) {
-    // console.log('signed in links');
-    await retrieveCart();
-    let cartSize = currentCart.items.length || 0;
+    if (currentCart === undefined){
+      console.log('awaiting dynamic links cart fetch');
+      currentCart = await retrieveCart();
+      console.log('fetched');
+      console.log(currentCart);
+      setCart(currentCart);
+    }
+    let cartSize = currentCart.items.length;
     ajaxLinks.insertAdjacentHTML('beforeend',
       '<a class="page-link" href="/ABOA/user">profile</a>' +
       `<a class="page-link" href="/ABOA/cart">cart(${cartSize})</a>` )
   } else {
-    // console.log('not signed in links');
     ajaxLinks.insertAdjacentHTML('beforeend',
       '<a class="page-link" href="/ABOA/user">sign in</a>' )
   }
+}
+
+const setCart = function(cart){
+  Cookies.set('cart', cart);
 }
 
 const retrieveCart = function(){
@@ -124,7 +131,7 @@ const createStripeScript = function(desc, amt, curr) {
   return script;
 }
 
-const renderCheckoutForm = function(orderInstance){
+const renderCheckoutForm = async function(orderInstance){
   console.log('now inside renderCheckoutForm function');
   let newOrder = orderInstance;
   console.log(newOrder);

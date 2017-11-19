@@ -1,5 +1,6 @@
 class Api::V1::PaymentsController < Api::V1::BaseController
-  acts_as_token_authentication_handler_for User
+  #un-comment this when stripe checkout is customized
+  #acts_as_token_authentication_handler_for User
   before_action :set_payment
   skip_after_action :verify_authorized, only: [ :create ]
 
@@ -30,6 +31,7 @@ class Api::V1::PaymentsController < Api::V1::BaseController
   private
 
   def set_payment
+    binding.pry
     @order = Order.where(paid: false).find(params[:order_id])
     if params[:stripeEmail]
       current_user = User.find_by(email:params[:stripeEmail])

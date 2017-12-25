@@ -25,7 +25,6 @@ permalink: /:categories/:year/:month/:day/:title
 cookies: "/ABOA/assets/js/libraries/cookie.js"
 js_file: "/ABOA/assets/js/application.js"
 js_partial: "/ABOA/assets/js/partial"
-twitter_username: _rsdz
 github_username:  fire-pls
 
 # Build settings

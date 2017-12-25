@@ -53,7 +53,7 @@ const renderStoreCategories = async function(){
   categories.forEach((categoryReference) =>{
     panel.insertAdjacentHTML('afterbegin',
       `<div style="background-color:#faa;" id="category-link" value="${categoryReference.name}">` +
-      `<p>${categoryReference.name}</p>` +
+      `<h3>${categoryReference.name}</h3>` +
       `<p>Listed Items: ${categoryReference.article_count}</p>` +
       '</div>');
   });
@@ -81,7 +81,7 @@ const renderCategoryItems = async function(){
   categoryItems.forEach((itemReference) =>{
     panel.insertAdjacentHTML('afterbegin',
       `<div style="background-color:#faa;" id="item-link" value="${itemReference.id}">` +
-      `<p>${itemReference.name}</p>` +
+      `<h3>${itemReference.name}</h3>` +
       `<p>${itemReference.price_formatted}</p>` +
       '</div>');
   });

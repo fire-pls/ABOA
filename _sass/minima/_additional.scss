@@ -68,6 +68,7 @@ hr {
 }
 
 #item-link, #category-link {
+  background-color: rgba(0,0,0,0.03);
   cursor: pointer;
   max-width: 300px;
   height: 150px;
@@ -77,6 +78,9 @@ hr {
   justify-content: center;
   align-items: center;
   margin: 0px auto 40px auto;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.15);
   p:last-child {
     margin: 0px;
   }
@@ -85,11 +89,11 @@ hr {
   }
 }
 
-#item-link:last-child {
+#item-link:last-child, #category-link:last-child {
   margin:0px
 }
-#category-link:last-child {
-  margin:0px
+#item-link:hover, #category-link:hover {
+  opacity: 0.1;
 }
 
 #loader {

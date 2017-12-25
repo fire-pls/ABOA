@@ -49,7 +49,7 @@ const renderStoreCategories = async function(){
   console.log('render all categories');
   panel.innerHTML = '<div id="loader"></div>';
   let categories = await requestApi();
-  pannel.innerHTML = "";
+  panel.innerHTML = "";
   categories.forEach((categoryReference) =>{
     panel.insertAdjacentHTML('afterbegin',
       `<div style="background-color:#faa;" id="category-link" value="${categoryReference.name}">` +
@@ -77,7 +77,7 @@ const renderCategoryItems = async function(){
   console.log('render category items');
   panel.innerHTML = '<div id="loader"></div>';
   let categoryItems = await requestApi();
-  pannel.innerHTML = "";
+  panel.innerHTML = "";
   categoryItems.forEach((itemReference) =>{
     panel.insertAdjacentHTML('afterbegin',
       `<div style="background-color:#faa;" id="item-link" value="${itemReference.id}">` +
@@ -102,7 +102,7 @@ const listenItemSelect = function(){
 }
 
 const renderItem = async function(){
-  pannel.innerHTML = '<div id="loader"></div>';
+  panel.innerHTML = '<div id="loader"></div>';
   let data = await requestApi();
   let price = data.price_formatted;
   let sizes = data.sizes;

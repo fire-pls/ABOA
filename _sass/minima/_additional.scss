@@ -87,13 +87,17 @@ hr {
   h3 {
     font-family: "Courier New";
   }
+  -webkit-transition: all .5s cubic-bezier(.18,.89,.32,1.28);
+  -moz-transition: all .5s cubic-bezier(.18,.89,.32,1.28);
+  -o-transition: all .5s cubic-bezier(.18,.89,.32,1.28);
+  transition: all .5s cubic-bezier(.18,.89,.32,1.28);
 }
 
 #item-link:last-child, #category-link:last-child {
-  margin:0px
+  margin: 0px auto 0px auto;
 }
 #item-link:hover, #category-link:hover {
-  opacity: 0.1;
+  background-color: rgba(0,0,0,0.1);
 }
 
 #loader {
